@@ -19,11 +19,11 @@
 
                                     <h3 class="mb-0">{{ $post->name }}</h3>
 
-                                    <div class="mb-1 text-muted">{{ $post->created_at }}</div>
+                                    <div class="mb-1 text-muted">{{ $post->created_at->toFormattedDateString() }}</div>
 
                                     <p class="card-text mb-auto text-justify "> {{ str_limit($post->text, $limit = 118, $end = '...') }} </p>
 
-                                    <a href="{{ route('post-view', $post->id) }}" class="stretched-link">Continue reading</a>
+                                    <a href="{{ route('post-show', $post->id) }}" class="stretched-link">Continue reading</a>
                                 </div>
 
                                 <div class="col-6 d-none d-lg-block">
