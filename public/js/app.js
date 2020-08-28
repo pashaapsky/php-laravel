@@ -37266,6 +37266,8 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! ./scripts */ "./resources/js/scripts.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -37310,6 +37312,35 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/scripts.js":
+/*!*********************************!*\
+  !*** ./resources/js/scripts.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).ready(function () {
+  var wrapperElem = $('.wrapper');
+  var postCreateForm = $('.post-create__form');
+  var feedbackCreateForm = $('.feedback__form');
+  postCreateForm.on('submit', function (event) {
+    if (this.checkValidity() === false) {
+      event.preventDefault();
+    }
+
+    this.classList.add('was-validated');
+  });
+  feedbackCreateForm.on('submit', function (event) {
+    if (this.checkValidity() === false) {
+      event.preventDefault();
+    }
+
+    this.classList.add('was-validated');
+  });
+});
 
 /***/ }),
 

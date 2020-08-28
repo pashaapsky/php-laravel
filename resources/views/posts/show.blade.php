@@ -8,20 +8,20 @@
 @section('content')
     <div class="container">
         <section class="post-show mb-2">
-            <h2 class="post-show header">Post </h2>
+            <h2 class="post-show header text-primary"><strong>Info Post #{{ $post->id }}</strong></h2>
 
-            <div class="post-show__content post col-md-6">
-                <div class="post__intro row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <div class="post__heading col-6 p-4 d-flex flex-column position-static">
-                        <strong class="d-inline-block mb-2 text-primary">Post #{{ $post->id }}</strong>
+            <div class="post-show__content post row d-flex flex-column">
+                <div class="post__intro d-flex w-100 border no-gutters rounded mb-4 shadow-sm position-relative">
+                    <div class="post__heading col-6 p-3 d-flex flex-column justify-content-top position-static">
+                        <h3 class="post__name mb-2">Name : {{ $post->name }}</h3>
 
-                        <h3 class="mb-0">{{ $post->name }}</h3>
+                        <div class="post__created-at mb-2 text-muted">Created at: {{ $post->created_at->toFormattedDateString() }}</div>
 
-                        <div class="mb-1 text-muted">{{ $post->created_at->toFormattedDateString() }}</div>
+                        <div class="post__description">
+                            <strong>Post description</strong>
 
-                        <p class="card-text mb-auto text-justify "> {{ str_limit($post->text, $limit = 118, $end = '...') }} </p>
-
-                        <a href="{{ route('post-show', $post->id) }}" class="stretched-link">Continue reading</a>
+                            <p class="description text-muted">{{ $post->description }}</p>
+                        </div>
                     </div>
 
                     <div class="col-6 d-none d-lg-block">
@@ -31,6 +31,12 @@
                             <text x="40%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                         </svg>
                     </div>
+                </div>
+
+                <div class="post__text">
+                    <h3 class="post__heading">Post content</h3>
+
+                    <p class="card-text mb-auto p-3 text-justify border rounded shadow-sm" style="min-height: 42vh"> {{ $post->text }} </p>
                 </div>
             </div>
         </section>

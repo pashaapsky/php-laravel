@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
+use App\Feedback;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
-class PostsController extends Controller
+class FeedbacksController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,9 @@ class PostsController extends Controller
      */
     public function index()
     {
+        $feedbacks = Feedback::latest()->get();
 
+        return View('/admin/feedback', compact('feedbacks'));
     }
 
     /**
@@ -24,9 +27,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-
-
-        return view('/posts.create');
+        //
     }
 
     /**
@@ -38,30 +39,24 @@ class PostsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'code' => 'required|unique:posts|regex:/[a-zA-Z0-9_-]+/',
-            'name' => 'required|min:5|max:100',
-            'description' => 'required|max:255',
-            'text' => 'required'
+            'email' => 'required',
+            'text' => 'required',
         ]);
 
-        if ($request->all(['published'])) {
-            $request->merge(['published' => 1]);
-        }
+        Feedback::create($request->all());
 
-        Post::create($request->all());
-
-        return redirect('/');
+        return redirect('/admin/feedbacks');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param Post $post
-     * @return void
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($id)
     {
-        return view('/posts.show', compact('post'));
+        //
     }
 
     /**

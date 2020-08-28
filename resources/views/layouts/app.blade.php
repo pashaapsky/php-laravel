@@ -20,16 +20,14 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div class="wrapper d-flex flex-column" id="app">
+    <div class="wrapper d-flex flex-column" id="app" style="min-height: 100vh">
         <header class="header">
             @yield('header')
         </header>
 
-        <main class="py-4" style="min-height: 88vh">
-            @yield('content')
-        </main>
+        @yield('content')
 
-        <footer class="footer">
+        <footer class="footer mt-auto">
             @yield('footer')
         </footer>
     </div>

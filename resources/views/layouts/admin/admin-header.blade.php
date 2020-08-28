@@ -1,7 +1,12 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">
-            APSKY <span class="text-danger">LARAVEL</span>
+        <a class="navbar-brand d-flex flex-column" href="{{ url('/admin') }}">
+            <div class="">
+                APSKY
+                <span class="text-danger" style="line-height: 0.8">LARAVEL</span>
+            </div>
+
+            <span class="small text-center text-primary" style="line-height: 0.8">administration</span>
         </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -16,15 +21,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('contacts') }}">{{ __('Contacts') }}</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('post-create') }}">{{ __('Create Post') }}</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin') }}">{{ __('Admin') }}</a>
+                    <a class="nav-link" href="{{ route('feedback') }}">{{ __('Feedbacks') }}</a>
                 </li>
             </ul>
 
