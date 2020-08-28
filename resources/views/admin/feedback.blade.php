@@ -11,7 +11,7 @@
                 <h2 class="feedback-section__header">Feedbacks</h2>
 
                 @if ($feedbacks->count())
-                    <table class="table table-info table-bordered table-hover">
+                    <table class="table table-info table-bordered table-hover table-responsive">
                         <thead class="thead-dark">
                         <tr class="" align="center">
                             <th scope="col">ID</th>
