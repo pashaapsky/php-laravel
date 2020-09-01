@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="container">
-        <section class="post-show mb-2">
+        <section class="post-show my-3">
             <h2 class="post-show header text-primary"><strong>Info Post #{{ $post->id }}</strong></h2>
 
             <div class="post-show__content post row d-flex flex-column">
@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="post__text">
-                    <h3 class="post__heading">Post content</h3>
+                    <h3 class="post__heading ml-3">Post content</h3>
 
                     <p class="card-text mb-auto p-3 text-justify border rounded shadow-sm" style="min-height: 42vh"> {{ $post->text }} </p>
                 </div>
