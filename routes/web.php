@@ -11,10 +11,14 @@ Route::get('/', function () {
 })->name('home');
 
 
+Route::get('/admin/posts', 'PostsController@index')->name('post-index');
 Route::get('/posts/create', 'PostsController@create')->name('post-create');
-Route::post('/posts/', 'PostsController@store');
 Route::get('/posts/{post}', 'PostsController@show')->name('post-show');
-Route::get('/posts/{id}/edit', 'PostsController@update');
+Route::post('/posts/', 'PostsController@store');
+Route::get('/posts/{id}/edit', 'PostsController@edit');
+//Route::patch('/posts/{post}', 'PostsController@destroy');
+Route::delete('/posts/{post}', 'PostsController@destroy');
+
 
 Route::get('/about', function () {
     return view('static.about');

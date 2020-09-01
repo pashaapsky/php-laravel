@@ -23,6 +23,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('feedback') }}">{{ __('Feedbacks') }}</a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('post-index') }}">{{ __('Posts') }}</a>
+                </li>
             </ul>
 
             <!-- Right Side Of Navbar -->
