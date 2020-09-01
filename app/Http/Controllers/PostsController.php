@@ -14,7 +14,9 @@ class PostsController extends Controller
      */
     public function index()
     {
+        $posts = Post::all();
 
+        return view('/posts.index', compact('posts'));
     }
 
     /**
@@ -24,8 +26,6 @@ class PostsController extends Controller
      */
     public function create()
     {
-
-
         return view('/posts.create');
     }
 
@@ -90,11 +90,13 @@ class PostsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Post $post
+     * @return void
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect('/admin/posts');
     }
 }

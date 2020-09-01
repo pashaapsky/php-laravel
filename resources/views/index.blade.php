@@ -14,7 +14,7 @@
                     <div class="posts-section__posts row post">
                         @foreach($posts as $post)
                             <div class="post__item col-md-6">
-                                <div class="post__intro row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                                <div class="post__intro text-break row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                                     <div class="post__heading col-6 p-4 d-flex flex-column position-static">
                                         <strong class="d-inline-block mb-2 text-primary">Post #{{ $post->id }}</strong>
 
