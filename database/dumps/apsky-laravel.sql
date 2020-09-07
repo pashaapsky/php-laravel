@@ -82,7 +82,7 @@ CREATE TABLE `feedback` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +91,7 @@ CREATE TABLE `feedback` (
 
 LOCK TABLES `feedback` WRITE;
 /*!40000 ALTER TABLE `feedback` DISABLE KEYS */;
-INSERT INTO `feedback` VALUES (3,'qwe@mail.ru','Lorem','2020-08-28 13:08:36','2020-08-28 13:08:36'),(4,'qadz@mail.ru','Lorem2','2020-08-28 13:08:36','2020-08-28 13:08:36');
+INSERT INTO `feedback` VALUES (3,'qwe@mail.ru','Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi exercitationem nisi tempora temporibus. Alias architecto asperiores, consequatur culpa deleniti enim facilis fuga necessitatibus, nisi repellendus rerum sit? Distinctio, fuga, recusandae.','2020-08-28 13:08:36','2020-08-28 13:08:36'),(4,'qadz@mail.ru','Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi exercitationem nisi tempora temporibus. Alias architecto asperiores, consequatur culpa deleniti enim facilis fuga necessitatibus, nisi repellendus rerum sit? Distinctio, fuga, recusandae.','2020-08-28 13:08:36','2020-08-28 13:08:36'),(5,'qweqe@mail.ru','qweqeqe','2020-08-28 11:12:28','2020-08-28 11:12:28');
 /*!40000 ALTER TABLE `feedback` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,7 +107,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,7 +116,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (7,'2014_10_12_000000_create_users_table',1),(8,'2014_10_12_100000_create_password_resets_table',1),(9,'2019_08_19_000000_create_failed_jobs_table',1),(10,'2020_08_26_090725_create_posts_table',1),(11,'2020_08_26_103233_create_contacts_table',1),(12,'2020_08_28_124336_create_feedback_table',2);
+INSERT INTO `migrations` VALUES (7,'2014_10_12_000000_create_users_table',1),(8,'2014_10_12_100000_create_password_resets_table',1),(9,'2019_08_19_000000_create_failed_jobs_table',1),(10,'2020_08_26_090725_create_posts_table',1),(11,'2020_08_26_103233_create_contacts_table',1),(12,'2020_08_28_124336_create_feedback_table',2),(14,'2020_09_07_173528_create_tags_table',3),(15,'2020_09_07_185537_create_post_tag_table',4);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,6 +142,33 @@ CREATE TABLE `password_resets` (
 LOCK TABLES `password_resets` WRITE;
 /*!40000 ALTER TABLE `password_resets` DISABLE KEYS */;
 /*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `post_tag`
+--
+
+DROP TABLE IF EXISTS `post_tag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `post_tag` (
+  `post_id` bigint unsigned NOT NULL,
+  `tag_id` bigint unsigned NOT NULL,
+  PRIMARY KEY (`post_id`,`tag_id`),
+  KEY `post_tag_tag_id_foreign` (`tag_id`),
+  CONSTRAINT `post_tag_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `post_tag_tag_id_foreign` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `post_tag`
+--
+
+LOCK TABLES `post_tag` WRITE;
+/*!40000 ALTER TABLE `post_tag` DISABLE KEYS */;
+INSERT INTO `post_tag` VALUES (4,1),(5,1),(6,1),(4,2),(5,3),(6,4);
+/*!40000 ALTER TABLE `post_tag` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -171,8 +198,35 @@ CREATE TABLE `posts` (
 
 LOCK TABLES `posts` WRITE;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
-INSERT INTO `posts` VALUES (3,'123','Post','Post desc','Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias beatae consequatur consequuntur, debitis dicta eos explicabo fugit labore molestiae, nam nemo odit placeat quae quisquam quos repellat repellendus tempore, voluptates?',0,'2020-08-26 17:05:56','2020-08-28 06:43:25'),(4,'4123','Post','Post desc','Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias beatae consequatur consequuntur, debitis dicta eos explicabo fugit labore molestiae, nam nemo odit placeat quae quisquam quos repellat repellendus tempore, voluptates?',0,'2020-08-26 17:05:56','2020-08-28 06:43:25'),(5,'12313','qweqe','qweqe','qweqeq',0,'2020-08-28 05:05:04','2020-08-28 05:05:04'),(6,'qweqe','qweqe','qweqe','qweqweqe',0,'2020-08-28 06:58:18','2020-08-28 06:58:18'),(7,'qweq','qweqe','qweqe','qweqe',0,'2020-08-28 07:01:17','2020-08-28 07:01:17'),(8,'1231qweq','qweqe','qweqeq','qweqeqe',0,'2020-08-28 07:20:33','2020-08-28 07:20:33'),(9,'qweqeqeqweqw','eeqweqeqe','qweqe','11',0,'2020-08-28 07:28:29','2020-08-28 07:28:29'),(10,'qweq12','qweqe','qw','aqewqe',1,'2020-08-28 08:17:11','2020-08-28 08:17:11'),(11,'qweqezz','qwezzz','qqweq','1qwe',1,'2020-08-28 08:39:17','2020-08-28 08:39:17'),(12,'qweqezz??','qwezzzq','qqweq','1qwe',1,'2020-08-28 08:39:24','2020-08-28 08:39:24'),(13,'1qweq','qweqeq','1231','312313',1,'2020-08-28 08:46:49','2020-08-28 08:46:49');
+INSERT INTO `posts` VALUES (4,'4123','Post4','Post desc4','Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias beatae consequatur consequuntur, debitis dicta eos explicabo fugit labore molestiae, nam nemo odit placeat quae quisquam quos repellat repellendus tempore, voluptates?<script>hello</script>',1,'2020-08-26 17:05:56','2020-09-07 14:10:35'),(5,'12313','qweqe','qweqe','qweqeq',0,'2020-08-28 05:05:04','2020-08-28 05:05:04'),(6,'qweqe','qweqe','qweqe','qweqweqe',0,'2020-08-28 06:58:18','2020-08-28 06:58:18'),(7,'qweq','qweqe','qweqe','qweqe',0,'2020-08-28 07:01:17','2020-08-28 07:01:17'),(8,'1231qweq','qweqe','qweqeq','qweqeqe',0,'2020-08-28 07:20:33','2020-08-28 07:20:33'),(9,'qweqeqeqweqw','eeqweqeqe','qweqe','11',0,'2020-08-28 07:28:29','2020-08-28 07:28:29');
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tags`
+--
+
+DROP TABLE IF EXISTS `tags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tags` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tags_name_unique` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tags`
+--
+
+LOCK TABLES `tags` WRITE;
+/*!40000 ALTER TABLE `tags` DISABLE KEYS */;
+INSERT INTO `tags` VALUES (1,'Tag1','2020-09-07 18:37:02','2020-09-07 18:37:02'),(2,'Tag2','2020-09-07 18:37:02','2020-09-07 18:37:02'),(3,'Tag3','2020-09-07 18:37:02','2020-09-07 18:37:02'),(4,'Tag4','2020-09-07 18:37:02','2020-09-07 18:37:02');
+/*!40000 ALTER TABLE `tags` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -214,4 +268,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-08-28 16:08:40
+-- Dump completed on 2020-09-07 23:02:08
