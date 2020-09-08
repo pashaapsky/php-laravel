@@ -1,17 +1,15 @@
 <?php
 
 use App\Post;
-use App\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    $posts = Post::latest()->get();
-    $tags = Tag::all();
-    return view('/index', compact('posts', 'tags'));
+    $posts = Post::with('tags')->latest()->get();
+    return view('/index', compact('posts'));
 })->name('home');
 
-
+Route::get('/tags/{tag}', 'TagsController@index');
 Route::get('/admin/posts', 'PostsController@index')->name('post-index');
 Route::get('/posts/create', 'PostsController@create')->name('post-create');
 Route::get('/posts/{post}', 'PostsController@show')->name('post-show');
