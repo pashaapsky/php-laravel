@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Post_tag;
+use App\Tag;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -56,6 +58,32 @@ class PostsController extends Controller
         ]);
 
         $post->update($values);
+
+        $postTags = $post->tags->keyBy('name');
+
+        if (!is_null($request['tags'])) {
+            $requestTags = collect(explode(', ', $request['tags']))->keyBy(function ($item) { return $item; });
+        } else {
+            $requestTags = collect([]);
+        }
+
+        $deleteTags = $postTags->diffKeys($requestTags);
+        $addTags = $requestTags->diffKeys($postTags);
+
+        if ($addTags->isNotEmpty()) {
+            foreach ($addTags as $tag) {
+                $tag = Tag::firstOrCreate(['name' => $tag]);
+                $post->tags()->attach($tag);
+            };
+        }
+
+        if ($deleteTags->isNotEmpty()) {
+            foreach ($deleteTags as $tag) {
+                $post->tags()->detach($tag);
+                $isLastTag = Post_tag::where('tag_id', $tag->id)->first();
+                if (!$isLastTag) $tag->delete();
+            };
+        }
 
         return back();
     }
