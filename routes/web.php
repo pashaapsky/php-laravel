@@ -1,13 +1,14 @@
 <?php
 
 use App\Post;
+use App\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $posts = Post::latest()->get();
-
-    return view('/index', compact('posts'));
+    $tags = Tag::all();
+    return view('/index', compact('posts', 'tags'));
 })->name('home');
 
 

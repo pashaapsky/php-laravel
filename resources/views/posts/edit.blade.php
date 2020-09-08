@@ -21,7 +21,7 @@
                                    class="form-control @error('name') is-invalid @enderror"
                                    id="form-name"
                                    name="name"
-                                   value="{{ $post->name }}"
+                                   value="{{ old('name', $post->name) }}"
                                    required=""
                             >
 
@@ -42,7 +42,7 @@
                                    class="form-control @error('description') is-invalid @enderror"
                                    id="form-description"
                                    name="description"
-                                   value="{{ $post->description }}"
+                                   value="{{ old('description', $post->description) }}"
                                    required=""
                             >
 
@@ -65,13 +65,34 @@
                                       cols="30"
                                       rows="10"
                                       placeholder="Post content here"
-                                      required="">{{ $post->text }}</textarea>
+                                      required="">{{ old('text', $post->text) }}</textarea>
 
                             <div class="invalid-feedback">
                                 Post Description is required.
                             </div>
 
                             @error('text')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
+                        <div class="form__field col-6 mb-3">
+                            <label for="form-tags">Tags</label>
+                            <input type="text"
+                                   class="form-control @error('description') is-invalid @enderror"
+                                   id="form-tags"
+                                   name="tags"
+                                   value="{{ old('tags', $post->tags->pluck('name'))->implode(', ') }}"
+                                   required=""
+                            >
+
+                            <div class="invalid-feedback">
+                                Post Description is required.
+                            </div>
+
+                            @error('description')
                             <div class="alert alert-danger">
                                 {{ $message }}
                             </div>
