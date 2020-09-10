@@ -9,15 +9,28 @@ use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:update,post')->except(['index', 'userPosts', 'adminIndex', 'create']);
+    }
+
     public function index()
     {
         $posts = Post::with('tags')->latest()->get();
         return view('/index', compact('posts'));
     }
 
+    public function userPosts()
+    {
+//        $posts = Post::where('owner_id', auth()->id())->with('tags')->latest()->get();
+        $posts = Auth()->user()->posts()->with('tags')->latest()->get();
+        return view('/posts.index', compact('posts'));
+    }
+
     public function adminIndex() {
         $posts = Post::with('tags')->latest()->get();
-        return view('/posts.index', compact('posts'));
+        return view('/posts.admin-index', compact('posts'));
     }
 
     public function create()
@@ -27,7 +40,7 @@ class PostsController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $attr = $request->validate([
             'code' => 'required|unique:posts|regex:/[a-zA-Z0-9_-]+/',
             'name' => 'required|min:5|max:100',
             'description' => 'required|max:255',
@@ -36,9 +49,12 @@ class PostsController extends Controller
 
         if ($request->all(['published'])) {
             $request->merge(['published' => 1]);
+            $attr['published'] = 1;
         }
 
-        Post::create($request->all());
+        $attr['owner_id'] = auth()->id();
+
+        Post::create($attr);
 
         return redirect('/');
     }

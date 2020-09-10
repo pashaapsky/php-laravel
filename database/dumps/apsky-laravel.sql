@@ -198,7 +198,7 @@ CREATE TABLE `posts` (
 
 LOCK TABLES `posts` WRITE;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
-INSERT INTO `posts` VALUES (4,'4123','Post4','Post desc4','Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias beatae consequatur consequuntur, debitis dicta eos explicabo fugit labore molestiae, nam nemo odit placeat quae quisquam quos repellat repellendus tempore, voluptates?<script>hello</script>',1,'2020-08-26 17:05:56','2020-09-07 14:10:35'),(5,'12313','qweqe','qweqe','qweqeq',0,'2020-08-28 05:05:04','2020-08-28 05:05:04'),(6,'qweqe','qweqe','qweqe','qweqweqe',0,'2020-08-28 06:58:18','2020-08-28 06:58:18'),(7,'qweq','qweqe','qweqe','qweqe',0,'2020-08-28 07:01:17','2020-08-28 07:01:17'),(8,'1231qweq','qweqe','qweqeq','qweqeqe',0,'2020-08-28 07:20:33','2020-08-28 07:20:33'),(9,'qweqeqeqweqw','eeqweqeqe','qweqe','11',0,'2020-08-28 07:28:29','2020-08-28 07:28:29');
+INSERT INTO `posts` VALUES (4,'4123','Post4','Post desc4','Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias beatae consequatur consequuntur, debitis dicta eos explicabo fugit labore molestiae, nam nemo odit placeat quae quisquam quos repellat repellendus tempore, voluptates?<script>hello</script>',1,'2020-08-26 17:05:56','2020-09-07 14:10:35'),(5,'12313','qweqe','qweqe','Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias beatae consequatur consequuntur, debitis dicta eos explicabo fugit labore molestiae, nam nemo odit placeat quae quisquam quos repellat repellendus tempore, voluptates?<script>hello</script>',0,'2020-08-28 05:05:04','2020-09-10 17:23:00'),(6,'qweqe','qweqe','qweqe','Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias beatae consequatur consequuntur, debitis dicta eos explicabo fugit labore molestiae, nam nemo odit placeat quae quisquam quos repellat repellendus tempore, voluptates?<script>hello</script>',0,'2020-08-28 06:58:18','2020-09-10 17:23:00'),(7,'qweq','qweqe','qweqe','Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias beatae consequatur consequuntur, debitis dicta eos explicabo fugit labore molestiae, nam nemo odit placeat quae quisquam quos repellat repellendus tempore, voluptates?<script>hello</script>',0,'2020-08-28 07:01:17','2020-09-10 17:23:00'),(8,'1231qweq','qweqe','qweqeq','Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias beatae consequatur consequuntur, debitis dicta eos explicabo fugit labore molestiae, nam nemo odit placeat quae quisquam quos repellat repellendus tempore, voluptates?<script>hello</script>',0,'2020-08-28 07:20:33','2020-09-10 17:23:00'),(9,'qweqeqeqweqw','eeqweqeqe','qweqe','Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias beatae consequatur consequuntur, debitis dicta eos explicabo fugit labore molestiae, nam nemo odit placeat quae quisquam quos repellat repellendus tempore, voluptates?<script>hello</script>',0,'2020-08-28 07:28:29','2020-09-10 17:23:01');
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -247,7 +247,7 @@ CREATE TABLE `users` (
   `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -256,6 +256,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (2,'Павел','ap.sky@yandex.ru',NULL,'$2y$10$2yK9UmERiX.O4V7n7gdJiu/96XvQqbFHadj5ISipVZwLBYVOs6LMW',NULL,'2020-09-10 17:13:37','2020-09-10 17:13:37');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -268,4 +269,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-09-07 23:02:08
+-- Dump completed on 2020-09-10 21:13:40
