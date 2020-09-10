@@ -8,7 +8,7 @@
     <main class="py-4" style="min-height: 88vh">
         <div class="container">
             <section class="posts-section mb-2 row flex-column flex-sm-row">
-                <h3 class="posts-section__header col-12 order-2 order-sm-0 text-center">Most recent posts</h3>
+                <h3 class="posts-section__header col-12 order-2 order-sm-0 text-center">Latest posts</h3>
 
                 @if ($posts->count())
                     <div class="posts-section__posts order-2 order-sm-0 col-12 col-sm-8 col-lg-10 post">
@@ -27,7 +27,7 @@
                                         @if($post->tags->isNotEmpty())
                                         <div class="post__tags mb-2">
                                             @foreach($post->tags as $tag)
-                                                <a href="#" class="badge badge-info text-white">{{ $tag->name }}</a>
+                                                <a href="/tags/{{ $tag->name }}" class="badge badge-info text-white">{{ $tag->name }}</a>
                                             @endforeach
                                         </div>
                                         @endif
@@ -47,16 +47,7 @@
                         @endforeach
                     </div>
 
-                    <div class="tags-cloud d-flex flex-column col-12 col-sm-4 col-lg-2 order-1">
-                        <h3 class="tags-cloud__header text-center">Available Tags</h3>
-
-                        <div class="tags-cloud__tags list-group flex-row flex-wrap flex-sm-column justify-content-start mb-3 mb-sm-0">
-                            @foreach($tags as $tag)
-                                <a href="#" class="btn btn-sm btn-info text-white m-1">{{ strtoupper($tag->name) }}</a>
-                            @endforeach
-                        </div>
-                    </div>
-
+                    @include('layouts.aside-tags')
                 @else
                     <p class="no-posts">Not available posts yet</p>
                 @endif
