@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/tags/{tag}', 'TagsController@index');
 
 Route::get('/', 'PostsController@index')->name('home');
+Route::get('/posts', 'PostsController@userPosts')->name('user-posts');
 Route::get('/posts/create', 'PostsController@create')->name('post-create');
 Route::get('/posts/{post}', 'PostsController@show')->name('post-show');
 Route::get('/posts/{post}/edit', 'PostsController@edit');
