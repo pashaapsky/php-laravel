@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PostCreated;
 use App\Post;
 use App\Post_tag;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PostsController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('can:update,post')->except(['index', 'userPosts', 'adminIndex', 'create']);
+        $this->middleware('can:update,post')->except(['index', 'userPosts', 'adminIndex', 'create', 'store']);
     }
 
     public function index()
@@ -47,14 +49,15 @@ class PostsController extends Controller
             'text' => 'required'
         ]);
 
-        if ($request->all(['published'])) {
-            $request->merge(['published' => 1]);
+        if ($request->has('published')) {
             $attr['published'] = 1;
         }
 
         $attr['owner_id'] = auth()->id();
 
-        Post::create($attr);
+        $post = Post::create($attr);
+
+        Mail::to($post->owner->email)->send(new PostCreated($post));
 
         return redirect('/');
     }

@@ -28,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         $gate->before(function ($user) {
-            if ($user->id == 2) {
+            if ($user->email == 'ap.sky@yandex.ru') {
                 return true;
             }
         });
