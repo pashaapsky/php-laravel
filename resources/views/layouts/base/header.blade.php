@@ -61,5 +61,7 @@
                 @endguest
             </ul>
         </div>
+
+        @include('layouts.notifications.flash_messages')
     </div>
 </nav>
