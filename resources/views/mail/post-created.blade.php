@@ -4,7 +4,7 @@
 {{ $post->text }}
 
 @component('mail::button', ['url' => '/posts/' . $post->id])
-Смотреть
+    Смотреть
 @endcomponent
 
 Thanks,<br>

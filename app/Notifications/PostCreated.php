@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Post;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,14 +12,16 @@ class PostCreated extends Notification
 {
     use Queueable;
 
+    public $post;
+
     /**
      * Create a new notification instance.
      *
-     * @return void
+     * @param Post $post
      */
-    public function __construct()
+    public function __construct(Post $post)
     {
-        //
+        $this->post = $post;
     }
 
     /**
@@ -29,7 +32,7 @@ class PostCreated extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['mail'];
     }
 
     /**
@@ -40,10 +43,7 @@ class PostCreated extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-                    ->subject('Post created')
-                    ->line('The introduction to the notification.')
-                    ->action('Go to site', url('/'));
+        return (new MailMessage)->markdown('mail.post-created', ['post' => $this->post]);
     }
 
     /**

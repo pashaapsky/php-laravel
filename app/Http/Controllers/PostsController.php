@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\PostCreated;
+use App\Notifications\PostCreated;
+use App\Notifications\PostDeleted;
+use App\Notifications\PostEdited;
 use App\Post;
 use App\Post_tag;
 use App\Tag;
+use App\User;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -24,8 +27,7 @@ class PostsController extends Controller
 
     public function userPosts()
     {
-//        $posts = Post::where('owner_id', auth()->id())->with('tags')->latest()->get();
-        $posts = Auth()->user()->posts()->with('tags')->latest()->get();
+        $posts = auth()->user()->posts()->with('tags')->latest()->get();
         return view('/posts.index', compact('posts'));
     }
 
@@ -56,7 +58,7 @@ class PostsController extends Controller
 
         $post = Post::create($attr);
 
-//        auth()->user()->notify(new \App\Notifications\PostCreated);
+        sendMailNotifyToAdmin(new PostCreated($post));
         flash( 'Post created successfully');
 
         return redirect('/');
@@ -108,6 +110,7 @@ class PostsController extends Controller
             };
         }
 
+        sendMailNotifyToAdmin(new PostEdited($post));
         flash( 'Post edited successfully');
 
         return back();
@@ -116,7 +119,10 @@ class PostsController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
+
+        sendMailNotifyToAdmin(new PostDeleted($post));
         flash( 'Post delete successfully');
+
         return redirect('/posts');
     }
 }
