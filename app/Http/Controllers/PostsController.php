@@ -56,7 +56,7 @@ class PostsController extends Controller
 
         $post = Post::create($attr);
 
-        auth()->user()->notify(new \App\Notifications\PostCreated);
+//        auth()->user()->notify(new \App\Notifications\PostCreated);
         flash( 'Post created successfully');
 
         return redirect('/');

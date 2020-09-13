@@ -11,9 +11,9 @@ class Post extends Model
 
     protected $guarded = [];
 
-    protected $dispatchesEvents = [
-        'created' => PostCreated::class,
-    ];
+//    protected $dispatchesEvents = [
+//        'created' => PostCreated::class,
+//    ];
 
     public function tags()
     {

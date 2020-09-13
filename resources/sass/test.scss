@@ -1,0 +1,15 @@
+.notify {
+    animation: my-animation 10s;
+
+    animation-fill-mode: both;
+
+    @keyframes my-animation {
+        0%   {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            z-index: -2;
+        }
+    }
+}

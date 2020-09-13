@@ -34,7 +34,7 @@
                         </tbody>
                     </table>
                 @else
-                    <p class="no-posts">Not available feedbacks</p>
+                    <p class="no-posts">No available feedbacks</p>
                 @endif
             </section>
         </div>
