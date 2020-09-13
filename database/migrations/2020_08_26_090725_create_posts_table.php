@@ -18,7 +18,7 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->string('name', 100);
-            $table->string('description', 100);
+            $table->string('description', 255);
             $table->text('text');
             $table->boolean('published')->default(0);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

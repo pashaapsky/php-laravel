@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\PostCreated;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
@@ -9,6 +10,10 @@ class Post extends Model
     protected $table = 'posts';
 
     protected $guarded = [];
+
+//    protected $dispatchesEvents = [
+//        'created' => PostCreated::class,
+//    ];
 
     public function tags()
     {

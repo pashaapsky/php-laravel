@@ -4,6 +4,6 @@
 
         @include('layouts.posts.tags', ['tags' => $tagsCloud])
     @else
-        <h3 class="tags-cloud__header text-center">Not available tags</h3>
+        <h3 class="tags-cloud__header text-center">No available tags</h3>
     @endif
 </div>

@@ -62,4 +62,6 @@
             </ul>
         </div>
     </div>
+
+    @include('layouts.notifications.flash_messages')
 </nav>

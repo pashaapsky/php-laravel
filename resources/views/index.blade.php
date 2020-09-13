@@ -49,7 +49,7 @@
 
                     @include('layouts.aside-tags')
                 @else
-                    <p class="no-posts">Not available posts yet</p>
+                    <p class="no-posts">No available posts yet</p>
                 @endif
             </section>
         </div>

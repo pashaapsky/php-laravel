@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\PostCreated;
+use App\Notifications\PostCreated;
+use App\Notifications\PostDeleted;
+use App\Notifications\PostEdited;
 use App\Post;
 use App\Post_tag;
 use App\Tag;
+use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class PostsController extends Controller
 {
@@ -25,8 +27,7 @@ class PostsController extends Controller
 
     public function userPosts()
     {
-//        $posts = Post::where('owner_id', auth()->id())->with('tags')->latest()->get();
-        $posts = Auth()->user()->posts()->with('tags')->latest()->get();
+        $posts = auth()->user()->posts()->with('tags')->latest()->get();
         return view('/posts.index', compact('posts'));
     }
 
@@ -57,7 +58,8 @@ class PostsController extends Controller
 
         $post = Post::create($attr);
 
-        Mail::to($post->owner->email)->send(new PostCreated($post));
+        sendMailNotifyToAdmin(new PostCreated($post));
+        flash( 'Post created successfully');
 
         return redirect('/');
     }
@@ -108,12 +110,19 @@ class PostsController extends Controller
             };
         }
 
+        sendMailNotifyToAdmin(new PostEdited($post));
+        flash( 'Post edited successfully');
+
         return back();
     }
 
     public function destroy(Post $post)
     {
         $post->delete();
-        return redirect('/admin/posts');
+
+        sendMailNotifyToAdmin(new PostDeleted($post));
+        flash( 'Post delete successfully');
+
+        return redirect('/posts');
     }
 }

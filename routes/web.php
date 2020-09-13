@@ -16,13 +16,9 @@ Route::delete('/posts/{post}', 'PostsController@destroy');
 
 Route::get('/admin/posts', 'PostsController@adminIndex')->name('admin-post-index');
 
-Route::get('/about', function () {
-    return view('static.about');
-})->name('about');
+Route::get('/about', 'StaticPagesController@aboutIndex')->name('about');
 
-Route::get('/contacts', function () {
-    return view('static.contacts');
-})->name('contacts');
+Route::get('/contacts', 'StaticPagesController@contactsIndex')->name('contacts');
 
 Route::get('/admin', function () {
     return view('admin.index');
