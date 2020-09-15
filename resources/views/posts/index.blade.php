@@ -24,6 +24,14 @@
 
                                         <p class="post__preview card-text mb-auto text-justify" style="height: 115px"> {{ str_limit($post->text, $limit = 100, $end = '...') }} </p>
 
+                                        @if($post->tags->isNotEmpty())
+                                            <div class="post__tags mb-2">
+                                                @foreach($post->tags as $tag)
+                                                    <span class="badge badge-info text-white">{{ $tag->name }}</span>
+                                                @endforeach
+                                            </div>
+                                        @endif
+
                                         <a href="{{ route('post-show', $post->id) }}" class="post__view">Continue reading</a>
                                     </div>
 

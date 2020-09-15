@@ -20,7 +20,7 @@ class CreatePostsTable extends Migration
             $table->string('name', 100);
             $table->string('description', 255);
             $table->text('text');
-            $table->boolean('published')->default(0);
+            $table->boolean('published')->default(false);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
 

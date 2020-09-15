@@ -6,9 +6,8 @@ use App\Notifications\PostCreated;
 use App\Notifications\PostDeleted;
 use App\Notifications\PostEdited;
 use App\Post;
-use App\Post_tag;
+use App\PostTag;
 use App\Tag;
-use App\User;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -17,6 +16,16 @@ class PostsController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('can:update,post')->except(['index', 'userPosts', 'adminIndex', 'create', 'store']);
+    }
+
+    public function validateRequest(Request $request)
+    {
+        return $request->validate([
+            'code' => 'required|unique:posts|regex:/[a-zA-Z0-9_-]+/',
+            'name' => 'required|min:5|max:100',
+            'description' => 'required|max:255',
+            'text' => 'required'
+        ]);
     }
 
     public function index()
@@ -43,12 +52,7 @@ class PostsController extends Controller
 
     public function store(Request $request)
     {
-        $attr = $request->validate([
-            'code' => 'required|unique:posts|regex:/[a-zA-Z0-9_-]+/',
-            'name' => 'required|min:5|max:100',
-            'description' => 'required|max:255',
-            'text' => 'required'
-        ]);
+        $attr = $this->validateRequest($request);
 
         if ($request->has('published')) {
             $attr['published'] = 1;
@@ -57,6 +61,14 @@ class PostsController extends Controller
         $attr['owner_id'] = auth()->id();
 
         $post = Post::create($attr);
+
+        if ($request->has('tags')) {
+            $requestTags = explode(', ', $request['tags']);
+            foreach ($requestTags as $tag) {
+                $tag = Tag::firstOrCreate(['name' => $tag]);
+                $post->tags()->attach($tag);
+            }
+        }
 
         sendMailNotifyToAdmin(new PostCreated($post));
         flash( 'Post created successfully');
@@ -76,11 +88,7 @@ class PostsController extends Controller
 
     public function update(Request $request, Post $post)
     {
-        $values = $request->validate([
-            'name' => 'required|min:5|max:100',
-            'description' => 'required|max:255',
-            'text' => 'required'
-        ]);
+        $values = $this->validateRequest($request);
 
         $post->update($values);
 
@@ -105,7 +113,7 @@ class PostsController extends Controller
         if ($deleteTags->isNotEmpty()) {
             foreach ($deleteTags as $tag) {
                 $post->tags()->detach($tag);
-                $isLastTag = Post_tag::where('tag_id', $tag->id)->first();
+                $isLastTag = PostTag::where('tag_id', $tag->id)->first();
                 if (!$isLastTag) $tag->delete();
             };
         }
