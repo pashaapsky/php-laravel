@@ -10,9 +10,11 @@
             <section class="post-edit mb-2">
                 <h2 class="post-edit__header mb-4"><strong>Edit post #{{ $post->id }}</strong></h2>
 
-                <form class="post-edit__form form d-flex flex-column needs-validation" method="post" action="/posts/{{ $post->id }}" novalidate>
+                <form class="post-edit__form form d-flex flex-column needs-validation" method="post" action="{{ route('posts.update', $post) }}" novalidate>
                     @csrf
                     @method('patch')
+
+                    <x-PostForm :item="$post" method="patch"></x-PostForm>
 
                     <div class="form__fields row d-flex flex-column">
                         <div class="form__field col-6 mb-3">

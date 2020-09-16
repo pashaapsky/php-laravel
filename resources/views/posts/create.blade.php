@@ -10,7 +10,7 @@
             <section class="post-create mb-2">
                 <h2 class="post-create__header mb-4"><strong>Creating new post</strong></h2>
 
-                <form class="post-create__form form d-flex flex-column needs-validation" method="post" action="/posts" novalidate>
+                <form class="post-create__form form d-flex flex-column needs-validation" method="post" action="{{ route('posts.store') }}" novalidate>
                     @csrf
 
                     <div class="form__fields row d-flex flex-column">

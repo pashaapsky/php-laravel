@@ -9,6 +9,7 @@ use App\Post;
 use App\PostTag;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PostsController extends Controller
 {
@@ -16,16 +17,6 @@ class PostsController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('can:update,post')->except(['index', 'userPosts', 'adminIndex', 'create', 'store']);
-    }
-
-    public function validateRequest(Request $request)
-    {
-        return $request->validate([
-            'code' => 'required|unique:posts|regex:/[a-zA-Z0-9_-]+/',
-            'name' => 'required|min:5|max:100',
-            'description' => 'required|max:255',
-            'text' => 'required'
-        ]);
     }
 
     public function index()
@@ -52,7 +43,12 @@ class PostsController extends Controller
 
     public function store(Request $request)
     {
-        $attr = $this->validateRequest($request);
+        $attr = $request->validate([
+            'code' => 'required|unique:posts|regex:/[a-zA-Z0-9_-]+/',
+            'name' => 'required|min:5|max:100',
+            'description' => 'required|max:255',
+            'text' => 'required'
+        ]);
 
         if ($request->has('published')) {
             $attr['published'] = 1;
@@ -62,7 +58,7 @@ class PostsController extends Controller
 
         $post = Post::create($attr);
 
-        if ($request->has('tags')) {
+        if (!is_null($request['tags'])) {
             $requestTags = explode(', ', $request['tags']);
             foreach ($requestTags as $tag) {
                 $tag = Tag::firstOrCreate(['name' => $tag]);
@@ -88,7 +84,12 @@ class PostsController extends Controller
 
     public function update(Request $request, Post $post)
     {
-        $values = $this->validateRequest($request);
+        $values = $request->validate([
+            'code' => ['required', 'regex:/[a-zA-Z0-9_-]+/', Rule::unique('posts')->ignore($post->id)],
+            'name' => 'required|min:5|max:100',
+            'description' => 'required|max:255',
+            'text' => 'required'
+        ]);
 
         $post->update($values);
 

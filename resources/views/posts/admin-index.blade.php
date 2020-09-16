@@ -24,7 +24,7 @@
 
                             <p class="post__preview card-text mb-auto text-justify" style="height: 115px"> {{ str_limit($post->text, $limit = 100, $end = '...') }} </p>
 
-                            <a href="{{ route('post-show', $post->id) }}" class="post__view">Continue reading</a>
+                            <a href="{{ route('posts.show', $post->id) }}" class="post__view">Continue reading</a>
                         </div>
 
                         <div class="post__photo col-6 d-none d-lg-flex align-items-center p-2">

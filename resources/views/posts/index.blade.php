@@ -32,7 +32,7 @@
                                             </div>
                                         @endif
 
-                                        <a href="{{ route('post-show', $post->id) }}" class="post__view">Continue reading</a>
+                                        <a href="{{ route('posts.show', $post->id) }}" class="post__view">Continue reading</a>
                                     </div>
 
                                     <div class="post__photo col-6 d-none d-lg-flex align-items-center p-2">
