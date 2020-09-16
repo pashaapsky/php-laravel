@@ -99,6 +99,17 @@
                             @enderror
                         </div>
 
+                        <div class="form__field col-6 mb-3">
+                            <label for="form-tags">Tags</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="form-tags"
+                                   name="tags"
+                                   placeholder="tag1, tag2"
+                                   value="{{ old('tags') }}"
+                            >
+                        </div>
+
                         <div class="form__field form-check mb-2">
                             <input class="form__checkbox"
                                    id="form-checkbox"
