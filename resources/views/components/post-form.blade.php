@@ -5,7 +5,7 @@
                class="form-control @error('code') is-invalid @enderror"
                id="form-code"
                name="code"
-               value="@if($method === 'post') {{ old('code') }} @else {{ old('code', $item->code) }} @endif"
+               value="@if($method === 'post'){{ old('code') }}@else{{ old('code', $item->code) }}@endif"
                placeholder=""
                required=""
         >
@@ -27,7 +27,7 @@
                class="form-control @error('name') is-invalid @enderror"
                id="form-name"
                name="name"
-               value="@if($method === 'post') {{ old('name') }} @else {{ old('name', $item->name) }} @endif"
+               value="@if($method === 'post'){{ old('name') }}@else{{ old('name', $item->name) }}@endif"
                required=""
         >
 
@@ -48,7 +48,7 @@
                class="form-control @error('description') is-invalid @enderror"
                id="form-description"
                name="description"
-               value="@if($method === 'post') {{ old('description') }} @else {{ old('description', $item->description) }} @endif"
+               value="@if($method === 'post'){{ old('description') }}@else{{ old('description', $item->description) }}@endif"
                required=""
         >
 
@@ -71,7 +71,7 @@
                   cols="30"
                   rows="10"
                   placeholder="Post content here"
-                  required="">@if($method === 'post') {{ old('text') }} @else {{ old('text', $item->text) }} @endif</textarea>
+                  required="">@if($method === 'post'){{ old('text') }}@else{{ old('text', $item->text) }}@endif</textarea>
 
         <div class="invalid-feedback">
             Post Description is required.
@@ -91,7 +91,7 @@
                id="form-tags"
                name="tags"
                placeholder="tag1, tag2"
-               value="@if($method === 'post') {{ old('tags') }} @else {{ old('tags', $item->tags->pluck('name')->implode(', ')) }} @endif"
+               value="@if($method === 'post'){{ old('tags') }}@else{{ old('tags', $item->tags->pluck('name')->implode(', ')) }}@endif"
         >
     </div>
 
