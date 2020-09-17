@@ -5,11 +5,10 @@
                class="form-control @error('code') is-invalid @enderror"
                id="form-code"
                name="code"
-               value="@if($method === 'post'){{ old('code') }}@else{{ old('code', $item->code) }}@endif"
+               value="{{ old('code', $post->code) }}"
                placeholder=""
                required=""
         >
-
         <div class="invalid-feedback">
             Code is required.
         </div>
@@ -27,7 +26,7 @@
                class="form-control @error('name') is-invalid @enderror"
                id="form-name"
                name="name"
-               value="@if($method === 'post'){{ old('name') }}@else{{ old('name', $item->name) }}@endif"
+               value="{{ old('name', $post->name) }}"
                required=""
         >
 
@@ -48,7 +47,7 @@
                class="form-control @error('description') is-invalid @enderror"
                id="form-description"
                name="description"
-               value="@if($method === 'post'){{ old('description') }}@else{{ old('description', $item->description) }}@endif"
+               value="{{ old('description', $post->description) }}"
                required=""
         >
 
@@ -71,7 +70,7 @@
                   cols="30"
                   rows="10"
                   placeholder="Post content here"
-                  required="">@if($method === 'post'){{ old('text') }}@else{{ old('text', $item->text) }}@endif</textarea>
+                  required="">{{ old('text', $post->text) }}</textarea>
 
         <div class="invalid-feedback">
             Post Description is required.
@@ -91,7 +90,7 @@
                id="form-tags"
                name="tags"
                placeholder="tag1, tag2"
-               value="@if($method === 'post'){{ old('tags') }}@else{{ old('tags', $item->tags->pluck('name')->implode(', ')) }}@endif"
+               value="{{ old('tags', $post->tags->pluck('name')->implode(', ')) }}"
         >
     </div>
 
@@ -100,15 +99,7 @@
                id="form-checkbox"
                type="checkbox"
                name="published"
-               @if ($method === "post")
-                    @if(old('published'))
-                        checked
-                    @endif
-               @else
-                    @if($item->published)
-               checked
-                    @endif
-               @endif
+               @if(old('published', $post->published)) checked @endif
         >
         <label class="form-check-label" for="form-checkbox">
             Published

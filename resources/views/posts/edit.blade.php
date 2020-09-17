@@ -14,7 +14,7 @@
                     @csrf
                     @method('patch')
 
-                    <x-PostForm :item="$post" method="patch"></x-PostForm>
+                    <x-PostForm :post="$post"></x-PostForm>
 
                     <button class="btn btn-primary align-self-end" type="submit" style="width: 150px">Save changes</button>
                 </form>

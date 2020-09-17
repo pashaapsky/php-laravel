@@ -19,6 +19,16 @@ class PostsController extends Controller
         $this->middleware('can:update,post')->except(['index', 'userPosts', 'adminIndex', 'create', 'store']);
     }
 
+    public function validateRequest($request, $post)
+    {
+        return $request->validate([
+            'code' => ['required', 'regex:/[a-zA-Z0-9_-]+/', Rule::unique('posts')->ignore($post->id)],
+            'name' => 'required|min:5|max:100',
+            'description' => 'required|max:255',
+            'text' => 'required'
+        ]);
+    }
+
     public function index()
     {
         $posts = Post::with('tags')->latest()->get();
@@ -43,12 +53,7 @@ class PostsController extends Controller
 
     public function store(Request $request)
     {
-        $attr = $request->validate([
-            'code' => 'required|unique:posts|regex:/[a-zA-Z0-9_-]+/',
-            'name' => 'required|min:5|max:100',
-            'description' => 'required|max:255',
-            'text' => 'required'
-        ]);
+        $attr = $this->validateRequest($request, new Post());
 
         if ($request->has('published')) {
             $attr['published'] = 1;
@@ -84,12 +89,7 @@ class PostsController extends Controller
 
     public function update(Request $request, Post $post)
     {
-        $values = $request->validate([
-            'code' => ['required', 'regex:/[a-zA-Z0-9_-]+/', Rule::unique('posts')->ignore($post->id)],
-            'name' => 'required|min:5|max:100',
-            'description' => 'required|max:255',
-            'text' => 'required'
-        ]);
+        $values = $this->validateRequest($request, $post);
 
         $post->update($values);
 

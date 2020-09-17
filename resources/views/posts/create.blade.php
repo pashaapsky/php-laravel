@@ -13,7 +13,7 @@
                 <form class="post-create__form form d-flex flex-column needs-validation" method="post" action="{{ route('posts.store') }}" novalidate>
                     @csrf
 
-                    <x-PostForm></x-PostForm>
+                    <x-PostForm :post="new \App\Post()"></x-PostForm>
 
                     <button class="btn btn-primary align-self-end" type="submit" style="width: 150px">Submit form</button>
                 </form>
