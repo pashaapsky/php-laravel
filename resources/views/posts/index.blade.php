@@ -15,16 +15,24 @@
                         @foreach($posts as $post)
                             <div class="post__item col-md-6 ">
                                 <div class="post__intro text-break row py-2 no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                                    <div class="post__heading col-6 p-4 d-flex flex-column position-static">
+                                    <div class="post__heading col-6 p-4 d-flex flex-column position-static" style="height: 280px;">
                                         <strong class="d-inline-block mb-2 text-primary">Post #{{ $post->id }}</strong>
 
                                         <h3 class="post__name mb-0">{{ $post->name }}</h3>
 
                                         <div class="post__created-at mb-1 text-muted">{{ $post->created_at->toFormattedDateString() }}</div>
 
-                                        <p class="post__preview card-text mb-auto text-justify" style="height: 115px"> {{ str_limit($post->text, $limit = 100, $end = '...') }} </p>
+                                        <p class="post__preview card-text mb-auto text-justify"> {{ str_limit($post->text, $limit = 100, $end = '...') }} </p>
 
-                                        <a href="{{ route('post-show', $post->id) }}" class="post__view">Continue reading</a>
+                                        @if($post->tags->isNotEmpty())
+                                            <div class="post__tags mb-2">
+                                                @foreach($post->tags as $tag)
+                                                    <span class="badge badge-info text-white">{{ $tag->name }}</span>
+                                                @endforeach
+                                            </div>
+                                        @endif
+
+                                        <a href="{{ route('posts.show', $post->id) }}" class="post__view">Continue reading</a>
                                     </div>
 
                                     <div class="post__photo col-6 d-none d-lg-flex align-items-center p-2">

@@ -12,7 +12,7 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('user-posts') }}">{{ __('My posts') }}</a>
+                    <a class="nav-link" href="{{ route('user.posts') }}">{{ __('My posts') }}</a>
                 </li>
 
                 <li class="nav-item">
@@ -20,7 +20,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('post-create') }}">{{ __('Create Post') }}</a>
+                    <a class="nav-link" href="{{ route('posts.create') }}">{{ __('Create Post') }}</a>
                 </li>
 
                 <li class="nav-item">
