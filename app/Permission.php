@@ -5,12 +5,16 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Grant extends Model
+class Permission extends Model
 {
+    use HasFactory;
+
     protected $guarded = [];
 
-    public function users()
+    public $timestamps = false;
+
+    public function roles()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(Role::class);
     }
 }
