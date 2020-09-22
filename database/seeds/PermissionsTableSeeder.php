@@ -16,11 +16,13 @@ class PermissionsTableSeeder extends Seeder
     public function run()
     {
         Permission::factory()
-            ->count(3)
+            ->count(5)
             ->state(new Sequence(
-                ['name' => 'user.create'],
-                ['name' => 'user.update'],
-                ['name' => 'user.delete'],
+                ['name' => 'viewAny'],
+                ['name' => 'view'],
+                ['name' => 'create'],
+                ['name' => 'update'],
+                ['name' => 'delete'],
             ))
             ->create();
     }
