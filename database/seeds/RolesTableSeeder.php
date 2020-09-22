@@ -8,20 +8,28 @@ use Illuminate\Database\Seeder;
 
 class RolesTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        Role::factory()
-            ->count(3)
-            ->state(new Sequence(
-                ['name' => 'admin'],
-                ['name' => 'moderator'],
-                ['name' => 'registered']
-            ))
-            ->create();
+        $roles = [
+            [
+                'name' => 'admin',
+                'slug' => 'admin'
+            ],
+            [
+                'name' => 'site manager',
+                'slug' => 'site-manager'
+            ],
+            [
+                'name' => 'registered',
+                'slug' => 'registered'
+            ]
+        ];
+
+        foreach ($roles as $role) {
+            Role::factory()->create([
+                'name' => $role['name'],
+                'slug' => $role['slug']
+            ]);
+        }
     }
 }
