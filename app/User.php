@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\HasRolesAndPermissions;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,6 +12,7 @@ class User extends Authenticatable
 {
     use Notifiable;
     use HasFactory;
+    use HasRolesAndPermissions;
 
     protected $fillable = [
         'name', 'email', 'password',
@@ -27,9 +29,5 @@ class User extends Authenticatable
     public function posts()
     {
         return $this->hasMany(Post::class, 'owner_id');
-    }
-
-    public function roles() {
-        return $this->belongsToMany(Role::class);
     }
 }

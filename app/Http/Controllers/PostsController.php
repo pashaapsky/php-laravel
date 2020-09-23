@@ -16,7 +16,6 @@ class PostsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('can:update,post')->except(['index', 'userPosts', 'adminIndex', 'create', 'store']);
     }
 
     public function validateRequest($request, $post)
@@ -79,16 +78,22 @@ class PostsController extends Controller
 
     public function show(Post $post)
     {
+        $this->authorize('view', $post);
+
         return view('/posts.show', compact('post'));
     }
 
     public function edit(Post $post)
     {
+        $this->authorize('update', $post);
+
         return view('/posts.edit', compact('post'));
     }
 
     public function update(Request $request, Post $post)
     {
+        $this->authorize('update', $post);
+
         $values = $this->validateRequest($request, $post);
 
         $post->update($values);
@@ -127,6 +132,8 @@ class PostsController extends Controller
 
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
+
         $post->delete();
 
         sendMailNotifyToAdmin(new PostDeleted($post));

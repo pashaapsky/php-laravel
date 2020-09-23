@@ -15,28 +15,41 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $adminRole = Role::where('slug', 'admin')->first();
+        $adminPermissions = Permission::all();
+
+        $registeredPermissions = ['view-posts', 'create-posts', 'update-posts', 'delete-posts'];
+        $registeredPermissions = Permission::whereIn('slug', $registeredPermissions)->get();
         $registeredRole = Role::where('slug', 'registered')->first();
 
-        User::factory()
+        $tags = Tag::factory()->count(10)->create();
+
+        $admin = User::factory()
             ->has(Post::factory()
-                ->has(Tag::factory()->count(random_int(0,2)))
-                ->count(2))
-            ->create([
+                ->count(2)
+            )->create([
                 'name' => 'Pavel',
                 'email' => 'admin@mail.ru',
                 'password' => Hash::make('1')
-            ])
-            ->roles()->attach($adminRole)
-        ;
+            ]);
+
+        $admin->posts()->each(function ($post)  use ($tags) {
+           $post->tags()->attach($tags->random(random_int(0, 2)));
+        });
+
+        $admin->roles()->attach($adminRole);
+        $admin->permissions()->attach($adminPermissions);
 
         User::factory()
             ->has(Post::factory()
-                ->has(Tag::factory()->count(random_int(0,2)))
                 ->count(9))
             ->count(2)
             ->create()
-            ->each(function (User $user) use ($registeredRole) {
+            ->each(function (User $user) use ($registeredRole, $registeredPermissions, $tags) {
                 $user->roles()->attach($registeredRole);
+                $user->permissions()->attach($registeredPermissions);
+                $user->posts()->each(function ($post) use ($tags) {
+                    $post->tags()->attach($tags->random(random_int(1, 2)));
+                });
             })
         ;
 
