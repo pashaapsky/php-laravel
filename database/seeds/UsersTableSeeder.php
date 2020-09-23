@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Permission;
 use App\Post;
 use App\Role;
 use App\Tag;
@@ -18,7 +19,7 @@ class UsersTableSeeder extends Seeder
 
         User::factory()
             ->has(Post::factory()
-                ->has(Tag::factory()->count(random_int(1,2)))
+                ->has(Tag::factory()->count(random_int(0,2)))
                 ->count(2))
             ->create([
                 'name' => 'Pavel',
@@ -30,13 +31,16 @@ class UsersTableSeeder extends Seeder
 
         User::factory()
             ->has(Post::factory()
-                ->has(Tag::factory()->count(random_int(1,2)))
+                ->has(Tag::factory()->count(random_int(0,2)))
                 ->count(9))
             ->count(2)
             ->create()
-            ->each(function ($user) use ($registeredRole) {
+            ->each(function (User $user) use ($registeredRole) {
                 $user->roles()->attach($registeredRole);
             })
         ;
+
+        $adminRole->permissions()->attach(Permission::all());
+        $registeredRole->permissions()->attach(Permission::all());
     }
 }
