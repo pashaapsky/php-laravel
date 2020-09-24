@@ -40,11 +40,6 @@ class PostsController extends Controller
         return view('/posts.index', compact('posts'));
     }
 
-    public function adminIndex() {
-        $posts = Post::with('tags')->latest()->get();
-        return view('/posts.admin-index', compact('posts'));
-    }
-
     public function create()
     {
         return view('/posts.create');

@@ -17,7 +17,6 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
         Post::class => PostPolicy::class
-        //'App\Post' => 'App\Policies\PostPolicy',
     ];
 
     /**
@@ -31,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         $gate->before(function ($user) {
-            if ($user->email == 'admin@mail.ru') {
+            if ($user->email == env('ADMIN_EMAIL_FOR_NOTIFICATIONS')) {
                 return true;
             }
         });
