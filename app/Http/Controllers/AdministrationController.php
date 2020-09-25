@@ -18,6 +18,6 @@ class AdministrationController extends Controller
 
     public function posts() {
         $posts = Post::with('tags')->latest()->get();
-        return view('/posts.admin-index', compact('posts'));
+        return view('/admin.posts', compact('posts'));
     }
 }

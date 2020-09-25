@@ -24,7 +24,8 @@ class PostFactory extends Factory
             'owner_id' => $activeUsers->random(1)->first(),
             'name' => $this->faker->words(2, true),
             'description' => $this->faker->words(3, true),
-            'text' => $this->faker->text
+            'text' => $this->faker->text,
+            'published' => boolval(rand(0,1))
         ];
     }
 }

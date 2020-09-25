@@ -13,7 +13,7 @@ Route::get('/about', 'StaticPagesController@aboutIndex')->name('about');
 Route::get('/contacts', 'StaticPagesController@contactsIndex')->name('contacts');
 
 Route::get('/admin', 'AdministrationController@index')->name('admin');
-Route::get('/admin/posts', 'AdministrationController@posts')->name('admin.posts.index');
+Route::get('/admin/posts', 'AdministrationController@posts')->name('admin.posts');
 
 Route::get('/admin/feedbacks', 'FeedbacksController@index')->name('feedback');;
 Route::post('/admin/feedbacks', 'FeedbacksController@store');

@@ -11,21 +11,27 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('user.posts') }}">{{ __('My posts') }}</a>
-                </li>
+                @guest
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('contacts') }}">{{ __('Contact Us') }}</a>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('user.posts') }}">{{ __('My posts') }}</a>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('contacts') }}">{{ __('Contacts') }}</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('contacts') }}">{{ __('Contacts') }}</a>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('posts.create') }}">{{ __('Create Post') }}</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('posts.create') }}">{{ __('Create Post') }}</a>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin') }}">{{ __('Admin') }}</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin') }}">{{ __('Administration') }}</a>
+                    </li>
+                @endguest
             </ul>
 
             <!-- Right Side Of Navbar -->

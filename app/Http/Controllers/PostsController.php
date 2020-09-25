@@ -30,7 +30,7 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = Post::with('tags')->latest()->get();
+        $posts = Post::with('tags')->where('published', 1)->latest()->get();
         return view('/index', compact('posts'));
     }
 
@@ -90,6 +90,8 @@ class PostsController extends Controller
         $this->authorize('update', $post);
 
         $values = $this->validateRequest($request, $post);
+
+        $request->has('published') ? $values['published'] = 1 : $values['published'] = 0;
 
         $post->update($values);
 
