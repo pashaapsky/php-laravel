@@ -67,6 +67,7 @@ class PostsController extends Controller
 
         sendMailNotifyToAdmin(new PostCreated($post));
         flash( 'Post created successfully');
+        pushNotification('Post created successfully');
 
         return redirect('/');
     }
@@ -123,6 +124,7 @@ class PostsController extends Controller
 
         sendMailNotifyToAdmin(new PostEdited($post));
         flash( 'Post edited successfully');
+        pushNotification('Post edited successfully');
 
         return back();
     }
@@ -134,8 +136,9 @@ class PostsController extends Controller
         $post->delete();
 
         sendMailNotifyToAdmin(new PostDeleted($post));
-        flash( 'Post delete successfully');
+        flash( 'Post deleted successfully');
+        pushNotification('Post deleted successfully');
 
-        return redirect('/posts');
+        return back();
     }
 }
