@@ -67,7 +67,7 @@ class PostsController extends Controller
 
         sendMailNotifyToAdmin(new PostCreated($post));
         flash( 'Post created successfully');
-        pushNotification('Post created successfully');
+        pushNotification('Post created successfully', 'New Notification');
 
         return redirect('/');
     }
@@ -92,7 +92,7 @@ class PostsController extends Controller
 
         $values = $this->validateRequest($request, $post);
 
-        $request->has('published') ? $values['published'] = 1 : $values['published'] = 0;
+        $values['published'] = $request->has('published');
 
         $post->update($values);
 
@@ -124,7 +124,7 @@ class PostsController extends Controller
 
         sendMailNotifyToAdmin(new PostEdited($post));
         flash( 'Post edited successfully');
-        pushNotification('Post edited successfully');
+        pushNotification('Post edited successfully', 'New Notification');
 
         return back();
     }
@@ -137,7 +137,7 @@ class PostsController extends Controller
 
         sendMailNotifyToAdmin(new PostDeleted($post));
         flash( 'Post deleted successfully');
-        pushNotification('Post deleted successfully');
+        pushNotification('Post deleted successfully', 'New Notification');
 
         return back();
     }
