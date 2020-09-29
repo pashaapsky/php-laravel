@@ -14,30 +14,21 @@ class UsersTableSeeder extends Seeder
 {
     public function run()
     {
-        $adminRole = Role::where('slug', 'admin')->first();
-        $adminPermissions = Permission::all();
-
         $registeredPermissions = ['view-posts', 'create-posts', 'update-posts', 'delete-posts'];
         $registeredPermissions = Permission::whereIn('slug', $registeredPermissions)->get();
+
         $registeredRole = Role::where('slug', 'registered')->first();
+        $registeredRole->permissions()->attach(Permission::all());
 
         $tags = Tag::factory()->count(10)->create();
 
-        $admin = User::factory()
-            ->has(Post::factory()
-                ->count(2)
-            )->create([
-                'name' => 'Pavel',
-                'email' => 'admin@mail.ru',
-                'password' => Hash::make('1')
-            ]);
+        $admin = User::where('email', env('ADMIN_EMAIL_FOR_NOTIFICATIONS'))->first();
+
+        $admin->posts()->saveMany(Post::factory()->count(2)->create());
 
         $admin->posts()->each(function ($post)  use ($tags) {
            $post->tags()->attach($tags->random(random_int(0, 2)));
         });
-
-        $admin->roles()->attach($adminRole);
-        $admin->permissions()->attach($adminPermissions);
 
         User::factory()
             ->has(Post::factory()
@@ -52,8 +43,5 @@ class UsersTableSeeder extends Seeder
                 });
             })
         ;
-
-        $adminRole->permissions()->attach(Permission::all());
-        $registeredRole->permissions()->attach(Permission::all());
     }
 }
