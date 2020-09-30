@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Console\Commands\SendNewPosts;
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,7 +26,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $now = Carbon::now()->format('Y-m-d');
+
+        $schedule->command(SendNewPosts::class, [$now])->weekly()->mondays()->at('09:00');
     }
 
     /**

@@ -8,15 +8,12 @@ Route::get('/', 'PostsController@index')->name('home');
 Route::get('/posts', 'PostsController@userPosts')->name('user.posts');
 Route::resource('posts', PostsController::class)->except(['index']);
 
-Route::get('/admin/posts', 'PostsController@adminIndex')->name('admin-post-index');
-
 Route::get('/about', 'StaticPagesController@aboutIndex')->name('about');
 
 Route::get('/contacts', 'StaticPagesController@contactsIndex')->name('contacts');
 
-Route::get('/admin', function () {
-    return view('admin.index');
-})->name('admin');
+Route::get('/admin', 'AdministrationController@index')->name('admin');
+Route::get('/admin/posts', 'AdministrationController@posts')->name('admin.posts');
 
 Route::get('/admin/feedbacks', 'FeedbacksController@index')->name('feedback');;
 Route::post('/admin/feedbacks', 'FeedbacksController@store');

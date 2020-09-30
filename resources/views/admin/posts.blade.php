@@ -38,7 +38,7 @@
                         <div class="d-flex col-12 justify-content-end pr-2">
                             <a href="/posts/{{ $post->id }}/edit" class="btn btn-outline-secondary" style="width: 80px; font-size: 0.7rem">Edit</a>
 
-                            <form method="post" action="{{ route('posts.destroy') }}">
+                            <form method="post" action="{{ route('posts.destroy', $post) }}">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-outline-secondary" style="width: 80px; font-size: 0.7rem">Delete</button>

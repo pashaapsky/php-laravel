@@ -16,7 +16,6 @@ class PostsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('can:update,post')->except(['index', 'userPosts', 'adminIndex', 'create', 'store']);
     }
 
     public function validateRequest($request, $post)
@@ -31,7 +30,7 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = Post::with('tags')->latest()->get();
+        $posts = Post::with('tags')->where('published', 1)->latest()->get();
         return view('/index', compact('posts'));
     }
 
@@ -39,11 +38,6 @@ class PostsController extends Controller
     {
         $posts = auth()->user()->posts()->with('tags')->latest()->get();
         return view('/posts.index', compact('posts'));
-    }
-
-    public function adminIndex() {
-        $posts = Post::with('tags')->latest()->get();
-        return view('/posts.admin-index', compact('posts'));
     }
 
     public function create()
@@ -73,23 +67,32 @@ class PostsController extends Controller
 
         sendMailNotifyToAdmin(new PostCreated($post));
         flash( 'Post created successfully');
+        pushNotification('Post created successfully', 'New Notification');
 
         return redirect('/');
     }
 
     public function show(Post $post)
     {
+        $this->authorize('view', $post);
+
         return view('/posts.show', compact('post'));
     }
 
     public function edit(Post $post)
     {
+        $this->authorize('update', $post);
+
         return view('/posts.edit', compact('post'));
     }
 
     public function update(Request $request, Post $post)
     {
+        $this->authorize('update', $post);
+
         $values = $this->validateRequest($request, $post);
+
+        $values['published'] = $request->has('published');
 
         $post->update($values);
 
@@ -121,17 +124,21 @@ class PostsController extends Controller
 
         sendMailNotifyToAdmin(new PostEdited($post));
         flash( 'Post edited successfully');
+        pushNotification('Post edited successfully', 'New Notification');
 
         return back();
     }
 
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
+
         $post->delete();
 
         sendMailNotifyToAdmin(new PostDeleted($post));
-        flash( 'Post delete successfully');
+        flash( 'Post deleted successfully');
+        pushNotification('Post deleted successfully', 'New Notification');
 
-        return redirect('/posts');
+        return back();
     }
 }
