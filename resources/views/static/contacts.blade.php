@@ -22,7 +22,7 @@
                             </div>
 
                             <div class="contact__phone">
-                                <a href="mailto:ap.sky@yandex.ru">ap.sky@yandex.ru</a>
+                                <a href="mailto:admin@mail.ru">admin@mail.ru</a>
                             </div>
                         </div>
                     </li>
@@ -38,7 +38,7 @@
                             </div>
 
                             <div class="contact__phone">
-                                <a href="mailto:ap.sky@yandex.ru">ap.sky@yandex.ru</a>
+                                <a href="mailto:admin@mail.ru">admin@mail.ru</a>
                             </div>
                         </div>
                     </li>
@@ -54,7 +54,7 @@
                             </div>
 
                             <div class="contact__phone">
-                                <a href="mailto:ap.sky@yandex.ru">ap.sky@yandex.ru</a>
+                                <a href="mailto:admin@mail.ru">admin@mail.ru</a>
                             </div>
                         </div>
                     </li>
@@ -70,7 +70,7 @@
                             </div>
 
                             <div class="contact__phone">
-                                <a href="mailto:ap.sky@yandex.ru">ap.sky@yandex.ru</a>
+                                <a href="mailto:admin@mail.ru">admin@mail.ru</a>
                             </div>
                         </div>
                     </li>
