@@ -8,6 +8,8 @@ Route::get('/', 'PostsController@index')->name('home');
 Route::get('/posts', 'PostsController@userPosts')->name('user.posts');
 Route::resource('posts', PostsController::class)->except(['index']);
 
+Route::get('/news', 'NewsController@index')->name('news.index');
+
 Route::get('/about', 'StaticPagesController@aboutIndex')->name('about');
 
 Route::get('/contacts', 'StaticPagesController@contactsIndex')->name('contacts');

@@ -17,6 +17,10 @@
                     </li>
                 @else
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('news.index') }}">{{ __('News') }}</a>
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('user.posts') }}">{{ __('My posts') }}</a>
                     </li>
 
