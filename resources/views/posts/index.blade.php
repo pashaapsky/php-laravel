@@ -44,7 +44,7 @@
                                     </div>
 
                                     <div class="d-flex col-12 justify-content-end pr-2">
-                                        <a href="/posts/{{ $post->id }}/edit" class="btn btn-outline-secondary" style="width: 80px; font-size: 0.7rem">Edit</a>
+                                        <a href="{{ route('posts.edit', $post) }}" class="btn btn-outline-secondary" style="width: 80px; font-size: 0.7rem">Edit</a>
 
                                         <form method="post" action="{{ route('posts.destroy', $post) }}">
                                             @csrf

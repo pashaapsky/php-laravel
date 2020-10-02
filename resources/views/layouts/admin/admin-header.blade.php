@@ -21,11 +21,19 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('feedback') }}">{{ __('Feedbacks') }}</a>
+                    <a class="nav-link" href="{{ route('admin.posts') }}">{{ __('Posts') }}</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.posts') }}">{{ __('Posts') }}</a>
+                    <a class="nav-link" href="{{ route('admin.news') }}">{{ __('News') }}</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('news.create') }}">{{ __('Create New') }}</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('feedback') }}">{{ __('Feedbacks') }}</a>
                 </li>
             </ul>
 

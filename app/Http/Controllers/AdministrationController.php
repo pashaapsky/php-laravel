@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\News;
 use App\Post;
-use Illuminate\Http\Request;
 
 class AdministrationController extends Controller
 {
@@ -19,5 +19,10 @@ class AdministrationController extends Controller
     public function posts() {
         $posts = Post::with('tags')->latest()->get();
         return view('/admin.posts', compact('posts'));
+    }
+
+    public function news() {
+        $news = News::all();
+        return view('/news.index', compact('news'));
     }
 }

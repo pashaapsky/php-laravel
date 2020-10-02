@@ -20,18 +20,16 @@
 
                                 <div class="new__created-at mb-1 text-muted">{{ $new->created_at->toFormattedDateString() }}</div>
 
-                                <p class="new__preview card-text flex-grow-1 text-justify">  {{ str_limit($new->text, $limit = 100, $end = '...') }} </p>
+                                <p class="new__preview card-text flex-grow-1 text-justify">  {{ str_limit($new->text, $limit = 200, $end = '...') }} </p>
+
+                                <div class="d-flex justify-content-end">
+                                    <a href="{{ route('news.show', $new) }}" class="btn btn-outline-secondary" style="width: 80px; font-size: 0.7rem">Read</a>
+
+                                    @if(auth()->user()->hasRole('admin'))
+                                        <a href="{{ route('news.edit', $new) }}" class="btn btn-outline-secondary ml-1" style="width: 80px; font-size: 0.7rem">Edit</a>
+                                    @endif
+                                </div>
                             </div>
-
-{{--                                <div class="d-flex col-12 justify-content-end pr-2">--}}
-{{--                                    <a href="/news/{{ $new->id }}/edit" class="btn btn-outline-secondary" style="width: 80px; font-size: 0.7rem">Edit</a>--}}
-
-{{--                                    <form method="new" action="{{ route('news.destroy', $new) }}">--}}
-{{--                                        @csrf--}}
-{{--                                        @method('DELETE')--}}
-{{--                                        <button type="submit" class="btn btn-outline-secondary" style="width: 80px; font-size: 0.7rem">Delete</button>--}}
-{{--                                    </form>--}}
-{{--                                </div>--}}
                         </div>
                 @empty
                     <p class="no-news">No available news yet</p>
