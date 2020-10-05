@@ -23,6 +23,6 @@ class AdministrationController extends Controller
 
     public function news() {
         $news = News::all();
-        return view('/news.index', compact('news'));
+        return view('/admin.news', compact('news'));
     }
 }

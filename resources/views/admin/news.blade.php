@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('header')
-    @include('layouts.base.header')
+    @include('layouts.admin.admin-header')
 @endsection
 
 @section('content')
@@ -25,22 +25,22 @@
                                 <div class="d-flex justify-content-end">
                                     <a href="{{ route('news.show', $new) }}" class="btn btn-outline-secondary" style="width: 80px; font-size: 0.7rem">Read</a>
 
-                                    @if(auth()->user()->hasRole('admin'))
-                                        <a href="{{ route('news.edit', $new) }}" class="btn btn-outline-secondary mx-1" style="width: 80px; font-size: 0.7rem">Edit</a>
+                                    <a href="{{ route('news.edit', $new) }}" class="btn btn-outline-secondary mx-1" style="width: 80px; font-size: 0.7rem">Edit</a>
 
-                                        <form method="post" action="{{ route('news.destroy', $new) }}">
-                                            @csrf
-                                            @method('DELETE')
+                                    <form method="post" action="{{ route('news.destroy', $new) }}">
+                                        @csrf
+                                        @method('DELETE')
 
-                                            <button type="submit" class="btn btn-outline-secondary" style="width: 80px; font-size: 0.7rem">Delete</button>
-                                        </form>
-                                    @endif
+                                        <button type="submit" class="btn btn-outline-secondary" style="width: 80px; font-size: 0.7rem">Delete</button>
+                                    </form>
+
+{{--                                    <a href="{{ route('news.destroy', $new) }}" class="btn btn-outline-secondary ml-1" style="width: 80px; font-size: 0.7rem">Delete</a>--}}
                                 </div>
                             </div>
                         </div>
-                @empty
-                    <p class="no-news">No available news yet</p>
-                @endforelse
+                    @empty
+                        <p class="no-news">No available news yet</p>
+                    @endforelse
                 </div>
             </section>
         </div>
@@ -48,5 +48,5 @@
 @endsection
 
 @section('footer')
-    @include('layouts.base.footer')
+    @include('layouts.admin.admin-footer')
 @endsection

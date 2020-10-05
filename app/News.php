@@ -10,6 +10,4 @@ class News extends Model
     use HasFactory;
 
     protected $guarded = [];
-
-
 }
