@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\NewTag;
+use App\PostTag;
 use App\Tag;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,7 +17,13 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         view()->composer('layouts.aside-tags', function ($view) {
-            $view->with('tagsCloud', Tag::all());
+            $postsTags = PostTag::all()->unique('tag_id')->keyBy('tag_id');
+            $newsTags = NewTag::all()->unique('tag_id')->keyBy('tag_id');
+            $keys = $postsTags->mergeRecursive($newsTags)->keyBy('tag_id')->keys()->sort();
+
+            $postsAndNewsTags = Tag::all()->whereIn('id', $keys);
+
+            $view->with('tagsCloud', $postsAndNewsTags);
         });
     }
 
@@ -26,6 +34,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+
     }
 }
