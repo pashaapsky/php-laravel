@@ -18,7 +18,7 @@ class NewsController extends Controller
 
     public function index()
     {
-        $news = News::all();
+        $news = News::with('tags')->latest()->get();
         return view('news.index', compact('news'));
     }
 
@@ -37,32 +37,32 @@ class NewsController extends Controller
         return back();
     }
 
-    public function show(News $news)
+    public function show(News $new)
     {
-        return view('news.show', compact('news'));
+        return view('news.show', compact('new'));
     }
 
-    public function edit(News $news)
+    public function edit(News $new)
     {
-        return view('news.edit', compact('news'));
+        return view('news.edit', compact('new'));
     }
 
-    public function update(Request $request, News $news)
+    public function update(Request $request, News $new)
     {
-        $values = $this->validateRequest($request, $news);
+        $values = $this->validateRequest($request, $new);
 
-        $news->update($values);
+        $new->update($values);
         flash( 'New updated successfully');
 
         return back();
     }
 
-    public function destroy(News $news)
+    public function destroy(News $new)
     {
-        $news->delete();
+        $new->delete();
 
         flash( 'New deleted successfully');
 
-        return back(0);
+        return back();
     }
 }

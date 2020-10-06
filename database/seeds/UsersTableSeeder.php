@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\News;
 use App\Permission;
 use App\Post;
 use App\Role;
@@ -43,5 +44,11 @@ class UsersTableSeeder extends Seeder
                 });
             })
         ;
+
+        $news = News::all();
+
+        foreach ($news as $new) {
+            $new->tags()->attach($tags->random(random_int(0,1)));
+        }
     }
 }

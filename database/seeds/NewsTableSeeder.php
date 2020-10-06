@@ -14,6 +14,6 @@ class NewsTableSeeder extends Seeder
      */
     public function run()
     {
-        News::factory()->count(4)->create();
+        News::factory()->count(4)->hasTags(2)->create();
     }
 }

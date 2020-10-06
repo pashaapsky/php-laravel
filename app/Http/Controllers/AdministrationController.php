@@ -22,7 +22,7 @@ class AdministrationController extends Controller
     }
 
     public function news() {
-        $news = News::all();
+        $news = News::latest()->get();
         return view('/admin.news', compact('news'));
     }
 }
