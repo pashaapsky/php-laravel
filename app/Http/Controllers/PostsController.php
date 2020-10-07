@@ -30,12 +30,6 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = Post::with('tags')->where('published', 1)->latest()->get();
-        return view('/index', compact('posts'));
-    }
-
-    public function userPosts()
-    {
         $posts = auth()->user()->posts()->with('tags')->latest()->get();
         return view('/posts.index', compact('posts'));
     }
@@ -96,31 +90,7 @@ class PostsController extends Controller
 
         $post->update($values);
 
-        $postTags = $post->tags->keyBy('name');
-
-        if (!is_null($request['tags'])) {
-            $requestTags = collect(explode(', ', $request['tags']))->keyBy(function ($item) { return $item; });
-        } else {
-            $requestTags = collect([]);
-        }
-
-        $deleteTags = $postTags->diffKeys($requestTags);
-        $addTags = $requestTags->diffKeys($postTags);
-
-        if ($addTags->isNotEmpty()) {
-            foreach ($addTags as $tag) {
-                $tag = Tag::firstOrCreate(['name' => $tag]);
-                $post->tags()->attach($tag);
-            };
-        }
-
-        if ($deleteTags->isNotEmpty()) {
-            foreach ($deleteTags as $tag) {
-                $post->tags()->detach($tag);
-                $isLastTag = PostTag::where('tag_id', $tag->id)->first();
-                if (!$isLastTag) $tag->delete();
-            };
-        }
+        updateTags($post, $request, PostTag::class);
 
         sendMailNotifyToAdmin(new PostEdited($post));
         flash( 'Post edited successfully');

@@ -1,5 +1,7 @@
 <?php
 
+use App\Tag;
+
 if (! function_exists('flash')) {
     /**
      * @param $message
@@ -43,3 +45,40 @@ if (! function_exists('pushNotification')) {
         return app(\App\Services\PushNotificationsService::class)->send($text, $title);
     }
 }
+
+if (! function_exists('updateTags')) {
+    /**
+     * @param $model
+     * @param $request
+     * @param $pivotTable
+     */
+
+    function updateTags($model, $request, $pivotTable) {
+        $modelTags = $model->tags->keyBy('name');
+
+        if (!is_null($request['tags'])) {
+            $requestTags = collect(explode(', ', $request['tags']))->keyBy(function ($item) { return $item; });
+        } else {
+            $requestTags = collect([]);
+        }
+
+        $deleteTags = $modelTags->diffKeys($requestTags);
+        $addTags = $requestTags->diffKeys($modelTags);
+
+        if ($addTags->isNotEmpty()) {
+            foreach ($addTags as $tag) {
+                $tag = Tag::firstOrCreate(['name' => $tag]);
+                $model->tags()->attach($tag);
+            };
+        }
+
+        if ($deleteTags->isNotEmpty()) {
+            foreach ($deleteTags as $tag) {
+                $model->tags()->detach($tag);
+                $isLastTag = $pivotTable::where('tag_id', $tag->id)->first();
+                if (!$isLastTag) $tag->delete();
+            };
+        }
+    }
+}
+

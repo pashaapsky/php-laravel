@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\News;
+use App\NewTag;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class NewsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:admin')->except(['index', 'show']);
+    }
+
     public function validateRequest($request, $new)
     {
         return $request->validate([
@@ -32,6 +39,15 @@ class NewsController extends Controller
         $values = $this->validateRequest($request, new News());
 
         $new = News::create($values);
+
+        if (!is_null($request['tags'])) {
+            $requestTags = explode(', ', $request['tags']);
+            foreach ($requestTags as $tag) {
+                $tag = Tag::firstOrCreate(['name' => $tag]);
+                $new->tags()->attach($tag);
+            }
+        }
+
         flash('New created successfully');
 
         return back();
@@ -52,6 +68,11 @@ class NewsController extends Controller
         $values = $this->validateRequest($request, $new);
 
         $new->update($values);
+
+        $newTags = $new->tags->keyBy('name');
+
+        updateTags($new, $request, NewTag::class);
+
         flash( 'New updated successfully');
 
         return back();

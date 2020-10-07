@@ -5,7 +5,14 @@
 @endsection
 
 @section('content')
-    @include('layouts.posts.posts-section')
+    <main class="py-4" style="min-height: 88vh">
+        <div class="container">
+            <div class="intro row">
+                @include('layouts.posts.posts-section')
+                @include('layouts.aside-tags')
+            </div>
+        </div>
+    </main>
 @endsection
 
 @section('footer')
