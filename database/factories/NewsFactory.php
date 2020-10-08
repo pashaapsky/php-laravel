@@ -13,7 +13,7 @@ class NewsFactory extends Factory
     {
         return [
             'name' => $this->faker->words(2, true),
-            'text' => $this->faker->text,
+            'text' => $this->faker->realText($maxNbChars = 1000, $indexSize = 2),
         ];
     }
 }

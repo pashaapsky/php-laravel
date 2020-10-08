@@ -12,6 +12,7 @@ class NewsController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('auth');
         $this->middleware('role:admin')->except(['index', 'show']);
     }
 
@@ -25,7 +26,8 @@ class NewsController extends Controller
 
     public function index()
     {
-        $news = News::with('tags')->latest()->get();
+        $news = News::with(['tags', 'comments'])->latest()->get();
+
         return view('news.index', compact('news'));
     }
 
@@ -84,6 +86,6 @@ class NewsController extends Controller
 
         flash( 'New deleted successfully');
 
-        return back();
+        return redirect('/admin/news');
     }
 }

@@ -40,7 +40,16 @@
                     <p class="card-text mb-auto p-3 text-justify border rounded shadow-sm" style="min-height: 42vh"> {{ $post->text }} </p>
                 </div>
 
-                <a href="/posts/{{ $post->id }}/edit" class="btn btn-primary align-self-end" style="width: 100px">Edit post</a>
+                <div class="d-flex justify-content-end">
+                        <a href="{{ route('posts.edit', $post) }}" class="btn btn-outline-secondary mx-1" style="width: 80px; font-size: 0.7rem">Edit</a>
+
+                        <form method="post" action="{{ route('posts.destroy', $post) }}">
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit" class="btn btn-outline-secondary" style="width: 80px; font-size: 0.7rem">Delete</button>
+                        </form>
+                </div>
             </div>
         </section>
     </div>

@@ -32,7 +32,7 @@ class UsersTableSeeder extends Seeder
         });
 
         User::factory()
-            ->has(Post::factory()
+            ->has(Post::factory()->hasComments(random_int(0, 2))
                 ->count(9))
             ->count(2)
             ->create()

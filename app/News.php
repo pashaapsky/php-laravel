@@ -13,6 +13,12 @@ class News extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class, 'new_tag', 'new_id', 'tag_id');
+//        return $this->belongsToMany(Tag::class, 'new_tag', 'new_id', 'tag_id');
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
     }
 }

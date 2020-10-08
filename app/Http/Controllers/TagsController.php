@@ -11,6 +11,6 @@ class TagsController extends Controller
     {
         $posts = $tag->posts()->with('tags')->get();
         $news = $tag->news()->with('tags')->get();
-        return view('index', compact('posts', 'news'));
+        return view('layouts.tags.index', compact('posts', 'news'));
     }
 }

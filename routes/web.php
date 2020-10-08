@@ -20,6 +20,7 @@ Route::get('/tags/{tag}', [App\Http\Controllers\TagsController::class,'index'])-
 
 Route::resource('posts', PostsController::class);
 Route::resource('news', NewsController::class)->except(['create', 'edit'])->parameters(['news' => 'new']);
+Route::post('/news/{new}/comments', [App\Http\Controllers\CommentsController::class,'store'])->name('comments.store');
 
 Route::get('/admin', [App\Http\Controllers\AdministrationController::class,'index'])->name('admin');
 Route::get('/admin/posts', [App\Http\Controllers\AdministrationController::class,'posts'])->name('admin.posts');

@@ -30,7 +30,7 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = auth()->user()->posts()->with('tags')->latest()->get();
+        $posts = auth()->user()->posts()->with(['tags', 'comments'])->latest()->get();
         return view('/posts.index', compact('posts'));
     }
 
@@ -109,6 +109,10 @@ class PostsController extends Controller
         flash( 'Post deleted successfully');
         pushNotification('Post deleted successfully', 'New Notification');
 
-        return back();
+        if (auth()->user()->hasRole('admin')) {
+            return redirect('/admin/posts');
+        } else {
+            return back();
+        }
     }
 }
