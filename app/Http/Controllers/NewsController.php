@@ -73,7 +73,7 @@ class NewsController extends Controller
 
         $newTags = $new->tags->keyBy('name');
 
-        updateTags($new, $request, NewTag::class);
+        updateTags($new, $request);
 
         flash( 'New updated successfully');
 

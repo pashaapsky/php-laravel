@@ -8,7 +8,7 @@
 
                 <div class="new__created-at mb-1 text-muted">{{ $new->created_at->toFormattedDateString() }}</div>
 
-                <p class="new__preview card-text flex-grow-1 text-justify">  {{ str_limit($new->text, $limit = 100, $end = '...') }} </p>
+                <p class="new__preview card-text flex-grow-1 text-justify">  {{ str_limit($new->text, $limit = 200, $end = '...') }} </p>
 
                 @if($new->tags->isNotEmpty())
                     <div class="post__tags mb-2">

@@ -1,6 +1,7 @@
 <?php
 
 use App\Tag;
+use App\Taggable;
 
 if (! function_exists('flash')) {
     /**
@@ -53,7 +54,7 @@ if (! function_exists('updateTags')) {
      * @param $pivotTable
      */
 
-    function updateTags($model, $request, $pivotTable) {
+    function updateTags($model, $request) {
         $modelTags = $model->tags->keyBy('name');
 
         if (!is_null($request['tags'])) {
@@ -75,7 +76,7 @@ if (! function_exists('updateTags')) {
         if ($deleteTags->isNotEmpty()) {
             foreach ($deleteTags as $tag) {
                 $model->tags()->detach($tag);
-                $isLastTag = $pivotTable::where('tag_id', $tag->id)->first();
+                $isLastTag = Taggable::where('tag_id', $tag->id)->first();
                 if (!$isLastTag) $tag->delete();
             };
         }

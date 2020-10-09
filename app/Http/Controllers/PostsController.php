@@ -90,7 +90,7 @@ class PostsController extends Controller
 
         $post->update($values);
 
-        updateTags($post, $request, PostTag::class);
+        updateTags($post, $request);
 
         sendMailNotifyToAdmin(new PostEdited($post));
         flash( 'Post edited successfully');
