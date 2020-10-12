@@ -83,3 +83,58 @@ if (! function_exists('updateTags')) {
     }
 }
 
+
+if (! function_exists('getUserWithMaxPosts')) {
+
+    function getUserWithMaxPosts() {
+        $usersWithPostsCount = \App\User::withCount('posts')->get();
+
+        $maxPosts = 0;
+        $usersWithMaxPosts = [];
+
+        foreach ($usersWithPostsCount as $user) {
+            if ($user->posts_count > $maxPosts) {
+                $usersWithMaxPosts = [];
+
+                $maxPosts = $user->posts_count;
+                array_push($usersWithMaxPosts, $user);
+            } elseif ($user->posts_count = $maxPosts) {
+                array_push($usersWithMaxPosts, $user);
+            }
+        }
+
+        if (!empty($usersWithMaxPosts)) {
+            return $usersWithMaxPosts;
+        }
+    }
+}
+
+if (! function_exists('getTheLongestPosts')) {
+
+    function getTheLongestPosts() {
+        $maxLength = 0;
+        $postsWithMaxTextLength = [];
+
+        foreach (\App\Post::all() as $post) {
+            $len = mb_strlen($post->text);
+
+            if ($len > $maxLength) {
+                $postsWithMaxTextLength = [];
+
+                $maxLength = mb_strlen($post->text);
+                array_push($postsWithMaxTextLength, $post);
+            } elseif ($len = $maxLength) {
+                array_push($postsWithMaxTextLength, $post);
+            }
+        }
+
+        if (!empty($postsWithMaxTextLength)) {
+            return $postsWithMaxTextLength;
+        }
+    }
+}
+
+
+
+
+

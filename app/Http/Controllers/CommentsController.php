@@ -25,6 +25,7 @@ class CommentsController extends Controller
         $values = $this->getValuesForStore($request, $new, News::class);
 
         $comment = Comment::create($values);
+        flash('Comment create successfully');
 
         return back();
     }
@@ -35,12 +36,16 @@ class CommentsController extends Controller
 
         $comment = Comment::create($values);
 
+        flash('Comment create successfully');
+
         return back();
     }
 
     public function destroy(Comment $comment)
     {
         $comment->delete();
+
+        flash('Comment delete successfully');
 
         return back();
     }

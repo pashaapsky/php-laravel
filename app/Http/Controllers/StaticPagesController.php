@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use Illuminate\Http\Request;
 
 class StaticPagesController extends Controller
@@ -12,5 +13,11 @@ class StaticPagesController extends Controller
 
     public function aboutIndex() {
         return view('static.about');
+    }
+
+    public function statisticsIndex() {
+
+
+        return view('static.statistics', ['statistics' => $statistics]);
     }
 }
