@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\News;
 use App\Post;
-use Illuminate\Http\Request;
 
 class StaticPagesController extends Controller
 {
@@ -16,7 +16,40 @@ class StaticPagesController extends Controller
     }
 
     public function statisticsIndex() {
+        //Общее количество статей
+        $postsCount = Post::all()->count();
 
+        //Общее количество новостей
+        $newsCount = News::all()->count();
+
+        //ФИО автора, у которого больше всего статей на сайте
+        $userWithMostPosts = getUserWithMaxPosts();
+
+        //Самая длинная статья - название, ссылка на статью и длина статьи в символах
+        $theLongestPost = getTheLongestPosts();
+
+        //Самая короткая статья - название, ссылка на статью и длина статьи в символах
+        $theShortestPost = getTheShortestPosts();
+
+        //Средние количество статей у “активных” пользователей, при этом активным пользователь считается, если у него есть более 1-й статьи
+        $avgPostsHaveActiveUsers = getAveragePosts();
+
+        //Самая непостоянная - название, ссылка на статью, которую меняли больше всего раз
+        $mostChangingPost = getMostChangingPosts();
+
+        //Самая обсуждаемая статья  - название, ссылка на статью, у которой больше всего комментариев.
+        $mostCommentPosts = getMostCommentPosts();
+
+        $statistics = [
+            'posts_count' => $postsCount,
+            'news_count' => $newsCount,
+            'user_with_most_posts' => $userWithMostPosts,
+            'the_longest_posts' => $theLongestPost,
+            'the_shortest_posts' => $theShortestPost,
+            'avg_posts_have_active_users' => $avgPostsHaveActiveUsers,
+            'most_changing_posts' => $mostChangingPost,
+            'most_comment_posts' => $mostCommentPosts
+        ];
 
         return view('static.statistics', ['statistics' => $statistics]);
     }

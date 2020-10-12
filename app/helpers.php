@@ -1,7 +1,9 @@
 <?php
 
+use App\Post;
 use App\Tag;
 use App\Taggable;
+use App\User;
 
 if (! function_exists('flash')) {
     /**
@@ -22,7 +24,7 @@ if (! function_exists('sendMailNotifyToAdmin')) {
      */
 
     function sendMailNotifyToAdmin($mailView) {
-        $admin = \App\User::where('email', env('ADMIN_EMAIL_FOR_NOTIFICATIONS'))->first();
+        $admin = User::where('email', env('ADMIN_EMAIL_FOR_NOTIFICATIONS'))->first();
 
         if ($admin) {
             $admin->notify($mailView);
@@ -85,9 +87,12 @@ if (! function_exists('updateTags')) {
 
 
 if (! function_exists('getUserWithMaxPosts')) {
+    /**
+     * @return array
+     */
 
     function getUserWithMaxPosts() {
-        $usersWithPostsCount = \App\User::withCount('posts')->get();
+        $usersWithPostsCount = User::withCount('posts')->get();
 
         $maxPosts = 0;
         $usersWithMaxPosts = [];
@@ -110,12 +115,15 @@ if (! function_exists('getUserWithMaxPosts')) {
 }
 
 if (! function_exists('getTheLongestPosts')) {
+    /**
+     * @return array
+     */
 
     function getTheLongestPosts() {
         $maxLength = 0;
         $postsWithMaxTextLength = [];
 
-        foreach (\App\Post::all() as $post) {
+        foreach (Post::all() as $post) {
             $len = mb_strlen($post->text);
 
             if ($len > $maxLength) {
@@ -123,7 +131,7 @@ if (! function_exists('getTheLongestPosts')) {
 
                 $maxLength = mb_strlen($post->text);
                 array_push($postsWithMaxTextLength, $post);
-            } elseif ($len = $maxLength) {
+            } elseif ($len === $maxLength) {
                 array_push($postsWithMaxTextLength, $post);
             }
         }
@@ -134,6 +142,120 @@ if (! function_exists('getTheLongestPosts')) {
     }
 }
 
+if (! function_exists('getTheShortestPosts')) {
+    /**
+     * @return array
+     */
+
+    function getTheShortestPosts() {
+        $isFirst = true;
+        $postsWithMinTextLength = [];
+
+        foreach (Post::all() as $post) {
+            if ($isFirst) {
+                $maxLength = mb_strlen($post->text);
+                $isFirst = false;
+            }
+
+            $len = mb_strlen($post->text);
+
+            if ($len < $maxLength) {
+                $postsWithMinTextLength = [];
+
+                $maxLength = $len;
+                array_push($postsWithMinTextLength, $post);
+            } elseif ($len === $maxLength) {
+                array_push($postsWithMinTextLength, $post);
+            }
+        }
+
+        if (!empty($postsWithMinTextLength)) {
+            return $postsWithMinTextLength;
+        }
+    }
+}
+
+if (! function_exists('getAveragePosts')) {
+    /**
+     * @return int
+     */
+
+    function getAveragePosts() {
+        $activeUsers = [];
+        $activeUsersPostsCount = 0;
+
+        $users = User::withCount('posts')->get();
+
+        foreach ($users as $user) {
+            if ($user->posts_count >= 1) {
+                array_push($activeUsers, $user);
+                $activeUsersPostsCount += $user->posts_count;
+            }
+        }
+
+        if (!empty($activeUsers)) {
+            $result = intval(round($activeUsersPostsCount / count($activeUsers), 0));
+
+            return $result;
+        }
+    }
+}
+
+if (! function_exists('getMostChangingPosts')) {
+    /**
+     * @return array
+     */
+
+    function getMostChangingPosts() {
+        $mostChangingPosts = [];
+        $postsWithChanges = Post::has('history', '>=', 1)->withCount('history')->get();
+
+        $changeCount = 0;
+
+        foreach ($postsWithChanges as $post) {
+            if ($post->history_count > $changeCount) {
+                $mostChangingPosts = [];
+                $changeCount = $post->history_count;
+
+                array_push($mostChangingPosts, $post);
+            } elseif ($post->history_count === $changeCount) {
+                array_push($mostChangingPosts, $post);
+            }
+        }
+
+        if (!empty($mostChangingPosts)) {
+            return $mostChangingPosts;
+        }
+    }
+}
+
+if (! function_exists('getMostCommentPosts')) {
+    /**
+     * @return array
+     */
+
+    function getMostCommentPosts() {
+        $mostCommentPosts = [];
+        $postsWithComments = Post::has('comments', '>=', 1)->withCount('comments')->get();
+
+        $commentsCount = 0;
+
+        foreach ($postsWithComments as $post) {
+            if ($post->comments_count > $commentsCount) {
+                $mostCommentPosts = [];
+                $commentsCount = $post->comments_count;
+
+                array_push($mostCommentPosts, $post);
+            } elseif ($post->comments_count === $commentsCount) {
+                array_push($mostCommentPosts, $post);
+            }
+        }
+
+        if (!empty($mostCommentPosts)) {
+            return $mostCommentPosts;
+        }
+    }
+}
 
 
 

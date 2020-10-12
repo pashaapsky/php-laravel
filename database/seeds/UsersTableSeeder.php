@@ -32,9 +32,9 @@ class UsersTableSeeder extends Seeder
         });
 
         User::factory()
-            ->has(Post::factory()->hasComments(random_int(0, 2))
+            ->has(Post::factory()->hasComments(random_int(0, 3))
                 ->count(9))
-            ->count(2)
+            ->count(3)
             ->create()
             ->each(function (User $user) use ($registeredRole, $registeredPermissions, $tags) {
                 $user->roles()->attach($registeredRole);

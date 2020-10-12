@@ -6,29 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/test', function () {
-    $statistics = [];
 
-    //Общее количество статей
-    $postsCount = Post::all()->count();
-    //Общее количество новостей
-    $newsCount = News::all()->count();
-    //ФИО автора, у которого больше всего статей на сайте
-    $userWithMostPosts = getUserWithMaxPosts();
-
-    //Самая длинная статья - название, ссылка на статью и длина статьи в символах
-    $theLongestPost = getTheLongestPosts();
-
-    dd($theLongestPost);
-
-    //Самая короткая статья - название, ссылка на статью и длина статьи в символах
-    $theShortestPost = Post::where('text', Post::min('text'))->get();
-
-    dd($theShortestPost);
-    //Средние количество статей у “активных” пользователей, при этом активным пользователь считается, если у него есть более 1-й статьи
-    //Самая непостоянная - название, ссылка на статью, которую меняли больше всего раз
-    //Самая обсуждаемая статья  - название, ссылка на статью, у которой больше всего комментариев.
-
-    dd($theLongestPost);
 });
 
 Route::get('/', function () {

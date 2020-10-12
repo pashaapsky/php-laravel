@@ -116,7 +116,7 @@
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-end">
+                <div class="d-flex justify-content-end mt-2">
                         <a href="{{ route('posts.edit', $post) }}" class="btn btn-outline-secondary mx-1" style="width: 80px; font-size: 0.7rem">Edit</a>
 
                         <form method="post" action="{{ route('posts.destroy', $post) }}">
