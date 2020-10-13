@@ -21,37 +21,92 @@
 
                         @if(!is_null($statistics['news_count']))
                             <li class="statistic__item list-group-item">
-                                Общее количество новостей :
+                                Общее количество новостей на сайте :
                                 <strong>{{ $statistics['news_count'] }}</strong>
                             </li>
                         @endif
 
-                        <li class="statistic__item list-group-item">
-                            ФИО автора, у которого больше всего статей на сайте :
-{{--                            @foreach()--}}
+                        @if(!is_null($statistics['users_with_most_posts']))
+                            <li class="statistic__item list-group-item">
+                                Авторы с наибольшим количеством статей на сайте :
+                                @foreach($statistics['users_with_most_posts'] as $key => $user)
+                                    <div class="values">
+                                        {{ $key + 1 }}. <span>{{ $user->name }}</span>
 
-{{--                            @endforeach--}}
-                        </li>
+                                        <a href="" class="text-primary">{{ $user->email }}</a> -
 
-                        <li class="statistic__item list-group-item">
-                            Самая длинная статья - название, ссылка на статью и длина статьи в символах
-                        </li>
+                                        <strong>{{ $user->posts_count }}</strong>
+                                    </div>
+                                @endforeach
+                            </li>
+                        @endif
 
-                        <li class="statistic__item list-group-item">
-                            Самая короткая статья - название, ссылка на статью и длина статьи в символах
-                        </li>
+                        @if(!is_null($statistics['the_longest_posts']))
+                            <li class="statistic__item list-group-item">
+                                Самая длинная статья на сайте.
+                                @foreach($statistics['the_longest_posts'] as $key => $post)
+                                    <div class="values">
+                                        {{ $key + 1 }}.
+                                        <span>Название статьи:
+                                            <a href="{{ route('posts.show', $post) }}">{{ $post->name }}</a> -
+                                            <strong>{{ mb_strlen($post->text) }}</strong>
+                                        </span>
+                                    </div>
+                                @endforeach
+                            </li>
+                        @endif
 
-                        <li class="statistic__item list-group-item">
-                            Средние количество статей у “активных” пользователей, при этом активным пользователь считается, если у него есть более 1-й статьи
-                        </li>
+                        @if(!is_null($statistics['the_shortest_posts']))
+                            <li class="statistic__item list-group-item">
+                                Самая короткая статья на сайте.
+                                @foreach($statistics['the_shortest_posts'] as $key => $post)
+                                    <div class="values">
+                                        {{ $key + 1 }}.
+                                        <span>Название статьи:
+                                            <a href="{{ route('posts.show', $post) }}">{{ $post->name }}</a> -
+                                            <strong>{{ mb_strlen($post->text) }}</strong>
+                                        </span>
+                                    </div>
+                                @endforeach
+                            </li>
+                        @endif
 
-                        <li class="statistic__item list-group-item">
-                            Самая непостоянная - название, ссылка на статью, которую меняли больше всего раз
-                        </li>
+                        @if(!is_null($statistics['avg_posts_have_active_users']))
+                            <li class="statistic__item list-group-item">
+                                Среднее количество статей у "активных" пользователей -
+                                <strong>{{ $statistics['avg_posts_have_active_users'] }}</strong>
+                            </li>
+                        @endif
 
-                        <li class="statistic__item list-group-item">
-                            Самая обсуждаемая статья  - название, ссылка на статью, у которой больше всего комментариев.
-                        </li>
+                        @if(!is_null($statistics['most_changing_posts']))
+                            <li class="statistic__item list-group-item">
+                                Самая часто изменяемая статья на сайте.
+                                @foreach($statistics['most_changing_posts'] as $key => $post)
+                                    <div class="values">
+                                        {{ $key + 1 }}.
+                                        <span>Название статьи:
+                                            <a href="{{ route('posts.show', $post) }}">{{ $post->name }}</a> -
+                                            <strong>{{ $post->history_count }}</strong>
+                                        </span>
+                                    </div>
+                                @endforeach
+                            </li>
+                        @endif
+
+                        @if(!is_null($statistics['most_comment_posts']))
+                            <li class="statistic__item list-group-item">
+                                Самая обсуждаемая статья на сайте.
+                                @foreach($statistics['most_comment_posts'] as $key => $post)
+                                    <div class="values">
+                                        {{ $key + 1 }}.
+                                        <span>Название статьи:
+                                        <a href="{{ route('posts.show', $post) }}">{{ $post->name }}</a> -
+                                        <strong>{{ $post->comments_count }}</strong>
+                                    </span>
+                                    </div>
+                                @endforeach
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </section>

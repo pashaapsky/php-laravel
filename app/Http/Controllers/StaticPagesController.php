@@ -23,7 +23,7 @@ class StaticPagesController extends Controller
         $newsCount = News::all()->count();
 
         //ФИО автора, у которого больше всего статей на сайте
-        $userWithMostPosts = getUserWithMaxPosts();
+        $usersWithMostPosts = getUserWithMaxPosts();
 
         //Самая длинная статья - название, ссылка на статью и длина статьи в символах
         $theLongestPost = getTheLongestPosts();
@@ -35,7 +35,7 @@ class StaticPagesController extends Controller
         $avgPostsHaveActiveUsers = getAveragePosts();
 
         //Самая непостоянная - название, ссылка на статью, которую меняли больше всего раз
-        $mostChangingPost = getMostChangingPosts();
+        $mostChangingPosts = getMostChangingPosts();
 
         //Самая обсуждаемая статья  - название, ссылка на статью, у которой больше всего комментариев.
         $mostCommentPosts = getMostCommentPosts();
@@ -43,11 +43,11 @@ class StaticPagesController extends Controller
         $statistics = [
             'posts_count' => $postsCount,
             'news_count' => $newsCount,
-            'user_with_most_posts' => $userWithMostPosts,
+            'users_with_most_posts' => $usersWithMostPosts,
             'the_longest_posts' => $theLongestPost,
             'the_shortest_posts' => $theShortestPost,
             'avg_posts_have_active_users' => $avgPostsHaveActiveUsers,
-            'most_changing_posts' => $mostChangingPost,
+            'most_changing_posts' => $mostChangingPosts,
             'most_comment_posts' => $mostCommentPosts
         ];
 
