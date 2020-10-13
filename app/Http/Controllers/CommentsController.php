@@ -9,32 +9,26 @@ use Illuminate\Http\Request;
 
 class CommentsController extends Controller
 {
-    public function getValuesForStore($request, $model, $modelClassName) {
+    public function newsCommentStore(Request $request, News $new)
+    {
         $values = $request->validate([
             'text' => 'required'
         ]);
 
-        $values['commentable_id'] = $model;
-        $values['commentable_type'] = $modelClassName;
+        $new->comments()->create($values);
 
-        return $values;
-    }
-
-    public function newsCommentStore(Request $request, $new)
-    {
-        $values = $this->getValuesForStore($request, $new, News::class);
-
-        $comment = Comment::create($values);
         flash('Comment create successfully');
 
         return back();
     }
 
-    public function postsCommentStore(Request $request, $post)
+    public function postsCommentStore(Request $request, Post $post)
     {
-        $values = $this->getValuesForStore($request, $post, Post::class);
+        $values = $request->validate([
+            'text' => 'required'
+        ]);
 
-        $comment = Comment::create($values);
+        $post->comments()->create($values);
 
         flash('Comment create successfully');
 

@@ -7,6 +7,7 @@ use App\Notifications\PostDeleted;
 use App\Notifications\PostEdited;
 use App\Post;
 use App\PostTag;
+use App\Services\TagsCreatorService;
 use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -90,7 +91,10 @@ class PostsController extends Controller
 
         $post->update($values);
 
-        updateTags($post, $request);
+        $updater = new TagsCreatorService($post, $request);
+        $updater->updateTags();
+
+//        updateTags($post, $request);
 
         sendMailNotifyToAdmin(new PostEdited($post));
         flash( 'Post edited successfully');
