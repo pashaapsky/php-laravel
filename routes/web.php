@@ -3,17 +3,10 @@
 use App\News;
 use App\Post;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/test', function () {
-    $posts = DB::table('posts')
-        ->select(DB::raw('MIN(text) as max_text'))
-        ->get();
 
-    $posts2 = Post::min('text');
-
-    dd($posts, $posts2);
 });
 
 Route::get('/', function () {

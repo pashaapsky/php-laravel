@@ -5,7 +5,7 @@ namespace App\Services;
 use App\News;
 use App\Post;
 use App\User;
-use Illuminate\Support\Facades\App;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
 class GetStatisticService
@@ -30,30 +30,78 @@ class GetStatisticService
 
 
     /**
-     * Пользователь с наибольшим количеством постов
-     * @return User
+     * @return Collection
      */
+
     static public function getUserWithMaxPosts()
     {
-        $maxPosts = DB::table('posts')
-            ->select(DB::raw('count(*) as post_count, owner_id'))
-            ->groupBy('owner_id')
-            ->orderBy('post_count', 'desc')
-            ->take(1)
-            ->get();
+        $users = User::has('posts')->withCount('posts')->get();
+        $usersWithMostPostsCount = $users->where('posts_count', $users->max('posts_count'));
 
-        $usersWithMaxPostsCount = \App\User::find($maxPosts[0]->owner_id);
-
-        return $usersWithMaxPostsCount;
+        return $usersWithMostPostsCount;
     }
+
+
+    /**
+     * @return Collection
+     */
 
     static public function getTheLongestPosts()
     {
+        $theLongestPosts = Post::where(DB::raw('Length(text)'), function($query){
+            $query->select(DB::raw('MAX(Length(text))'))
+                ->from(DB::table('posts'));
+        })->get();
 
-
-        return;
+        return $theLongestPosts;
     }
 
+    /**
+     * @return Collection
+     */
 
+    static public function getTheShortestPosts()
+    {
+        $theShortestPosts = Post::where(DB::raw('Length(text)'), function($query){
+            $query->select(DB::raw('MIN(Length(text))'))
+                ->from(DB::table('posts'));
+        })->get();
 
+        return $theShortestPosts;
+    }
+
+    /**
+     * @return int
+     */
+
+    static public function getAveragePosts()
+    {
+        $posts = User::has('posts', '>', 1)->withCount('posts')->get();
+        $averagePosts = intval(round($posts->avg('posts_count')));
+
+        return $averagePosts;
+    }
+
+    /**
+     * @return Collection
+     */
+    static public function getMostChangingPosts()
+    {
+        $posts = Post::has('history', '>=', 1)->withCount('history')->get();
+        $maxChangingPosts = $posts->where('history_count', $posts->max('history_count'));
+
+        return $maxChangingPosts;
+    }
+
+    /**
+     * @return Collection
+     */
+
+    static public function getMostCommentPosts()
+    {
+        $posts = Post::has('comments', '>=', 1)->withCount('comments')->get();
+        $mostCommentPosts = $posts->where('comments_count', $posts->max('comments_count'));
+
+        return $mostCommentPosts;
+    }
 }

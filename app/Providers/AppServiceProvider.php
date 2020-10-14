@@ -2,11 +2,7 @@
 
 namespace App\Providers;
 
-use App\News;
-use App\Post;
-use App\Services\TagsCreatorService;
 use App\Tag;
-use App\Taggable;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
