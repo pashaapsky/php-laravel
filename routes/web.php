@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/test', function () {
 
-});
+ });
 
 Route::get('/', function () {
     $posts = Post::with('tags')->where('published', 1)->latest()->take(4)->get();

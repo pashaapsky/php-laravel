@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\GetStatisticService;
+use App\Services\StatisticService;
 
 class StaticPagesController extends Controller
 {
@@ -16,28 +16,30 @@ class StaticPagesController extends Controller
 
     public function statisticsIndex() {
         //Общее количество статей
-        $postsCount = GetStatisticService::getPostsCount();
+        $statisticService = new StatisticService();
+
+        $postsCount = $statisticService->getPostsCount();
 
         //Общее количество новостей
-        $newsCount = GetStatisticService::getNewsCount();
+        $newsCount = $statisticService->getNewsCount();
 
         //ФИО автора, у которого больше всего статей на сайте
-        $usersWithMostPosts = GetStatisticService::getUserWithMaxPosts();
+        $usersWithMostPosts = $statisticService->getUserWithMaxPosts();
 
         //Самая длинная статья - название, ссылка на статью и длина статьи в символах
-        $theLongestPost = GetStatisticService::getTheLongestPosts();
+        $theLongestPost = $statisticService->getTheLongestPosts();
 
         //Самая короткая статья - название, ссылка на статью и длина статьи в символах
-        $theShortestPost = GetStatisticService::getTheShortestPosts();
+        $theShortestPost = $statisticService->getTheShortestPosts();
 
         //Средние количество статей у “активных” пользователей, при этом активным пользователь считается, если у него есть более 1-й статьи
-        $avgPostsHaveActiveUsers = GetStatisticService::getAveragePosts();
+        $avgPostsHaveActiveUsers = $statisticService->getAveragePosts();
 
         //Самая непостоянная - название, ссылка на статью, которую меняли больше всего раз
-        $mostChangingPosts = GetStatisticService::getMostChangingPosts();
+        $mostChangingPosts = $statisticService->getMostChangingPosts();
 
         //Самая обсуждаемая статья  - название, ссылка на статью, у которой больше всего комментариев.
-        $mostCommentPosts = GetStatisticService::getMostCommentPosts();
+        $mostCommentPosts = $statisticService->getMostCommentPosts();
 
         $statistics = [
             'posts_count' => $postsCount,
