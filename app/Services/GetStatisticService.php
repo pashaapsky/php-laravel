@@ -16,7 +16,7 @@ class GetStatisticService
      */
     static public function getPostsCount()
     {
-        return Post::all()->count();
+        return Post::count();
     }
 
     /**
@@ -25,7 +25,7 @@ class GetStatisticService
      */
     static public function getNewsCount()
     {
-        return News::all()->count();
+        return News::count();
     }
 
 
@@ -35,8 +35,17 @@ class GetStatisticService
 
     static public function getUserWithMaxPosts()
     {
-        $users = User::has('posts')->withCount('posts')->get();
-        $usersWithMostPostsCount = $users->where('posts_count', $users->max('posts_count'));
+//        $users = User::has('posts')->withCount('posts')->get();
+//        $usersWithMostPostsCount = $users->where('posts_count', $users->max('posts_count'));
+
+        $users = DB::table('users')
+            ->join('posts', 'users.id', '=', 'owner_id')
+            ->select('users.name', DB::raw('Count(*) as posts_count'))
+            ->groupBy('users.name')
+            ->orderByDesc('posts_count')
+            ->first();
+
+        $usersWithMostPostsCount = User::find('name', $users->name);
 
         return $usersWithMostPostsCount;
     }
