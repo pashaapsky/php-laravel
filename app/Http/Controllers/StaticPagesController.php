@@ -27,19 +27,19 @@ class StaticPagesController extends Controller
         $usersWithMostPosts = $statisticService->getUserWithMaxPosts();
 
         //Самая длинная статья - название, ссылка на статью и длина статьи в символах
-        $theLongestPost = $statisticService->getTheLongestPosts();
+        $theLongestPost = $statisticService->getTheLongestPost();
 
         //Самая короткая статья - название, ссылка на статью и длина статьи в символах
-        $theShortestPost = $statisticService->getTheShortestPosts();
+        $theShortestPost = $statisticService->getTheShortestPost();
 
         //Средние количество статей у “активных” пользователей, при этом активным пользователь считается, если у него есть более 1-й статьи
         $avgPostsHaveActiveUsers = $statisticService->getAveragePosts();
 
         //Самая непостоянная - название, ссылка на статью, которую меняли больше всего раз
-        $mostChangingPosts = $statisticService->getMostChangingPosts();
+        $mostChangingPosts = $statisticService->getMostChangingPost();
 
         //Самая обсуждаемая статья  - название, ссылка на статью, у которой больше всего комментариев.
-        $mostCommentPosts = $statisticService->getMostCommentPosts();
+        $mostCommentPosts = $statisticService->getMostCommentPost();
 
         $statistics = [
             'posts_count' => $postsCount,
@@ -51,6 +51,8 @@ class StaticPagesController extends Controller
             'most_changing_posts' => $mostChangingPosts,
             'most_comment_posts' => $mostCommentPosts
         ];
+
+//        dd($theShortestPost);
 
         return view('static.statistics', ['statistics' => $statistics]);
     }

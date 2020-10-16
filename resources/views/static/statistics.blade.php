@@ -44,30 +44,24 @@
                         @if(!is_null($statistics['the_longest_posts']))
                             <li class="statistic__item list-group-item">
                                 Самая длинная статья на сайте.
-                                @foreach($statistics['the_longest_posts'] as $key => $post)
-                                    <div class="values">
-                                        {{ $key + 1 }}.
-                                        <span>Название статьи:
-                                            <a href="{{ route('posts.show', $post) }}">{{ $post->name }}</a> -
-                                            <strong>{{ mb_strlen($post->text) }}</strong>
-                                        </span>
-                                    </div>
-                                @endforeach
+                                <div class="values">
+                                    <span>Название статьи:
+                                        <a href="{{ route('posts.show', $statistics['the_longest_posts']) }}">{{ $statistics['the_longest_posts']->name }}</a> -
+                                        <strong>{{ mb_strlen($statistics['the_longest_posts']->text) }}</strong>
+                                    </span>
+                                </div>
                             </li>
                         @endif
 
                         @if(!is_null($statistics['the_shortest_posts']))
                             <li class="statistic__item list-group-item">
                                 Самая короткая статья на сайте.
-                                @foreach($statistics['the_shortest_posts'] as $key => $post)
-                                    <div class="values">
-                                        {{ $key + 1 }}.
-                                        <span>Название статьи:
-                                            <a href="{{ route('posts.show', $post) }}">{{ $post->name }}</a> -
-                                            <strong>{{ mb_strlen($post->text) }}</strong>
-                                        </span>
-                                    </div>
-                                @endforeach
+                                <div class="values">
+                                    <span>Название статьи:
+                                        <a href="{{ route('posts.show', $statistics['the_shortest_posts']) }}">{{ $statistics['the_shortest_posts']->name }}</a> -
+                                        <strong>{{ mb_strlen($statistics['the_shortest_posts']->text) }}</strong>
+                                    </span>
+                                </div>
                             </li>
                         @endif
 
