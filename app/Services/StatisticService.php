@@ -30,29 +30,26 @@ class StatisticService
 
 
     /**
-     * @return Collection
+     * @return User
      */
 
     public function getUserWithMaxPosts()
     {
-        $users = User::has('posts')->withCount('posts')->get();
-//        $usersWithMostPostsCount = $users->where('posts_count', $users->max('posts_count'));
+        $userWithMostPostsCount = User::has('posts')->withCount('posts')->orderBy('posts_count', 'desc')->first();
 
-        $users = DB::table('users')
-            ->join('posts', 'users.id', '=', 'owner_id')
-            ->select('users.name', DB::raw('Count(*) as posts_count'))
-            ->groupBy('users.name')
-            ->orderByDesc('posts_count')
-            ->first();
-
-        $userWithMostPostsCount = User::where('name', $users->name)->withCount('posts')->get();
+//        $users = DB::table('users')
+//            ->join('posts', 'users.id', '=', 'owner_id')
+//            ->select('users.name', DB::raw('Count(*) as posts_count'))
+//            ->groupBy('users.name')
+//            ->orderByDesc('posts_count')
+//            ->first();
 
         return $userWithMostPostsCount;
     }
 
 
     /**
-     * @return Collection
+     * @return Post
      */
 
     public function getTheLongestPost()
@@ -66,7 +63,7 @@ class StatisticService
     }
 
     /**
-     * @return Collection
+     * @return Post
      */
 
     public function getTheShortestPost()
@@ -85,33 +82,30 @@ class StatisticService
 
     public function getAveragePosts()
     {
-//        $posts = User::has('posts', '>', 1)->withCount('posts')->get();
-//        $averagePosts = intval(round($posts->avg('posts_count')));
+        $posts = User::has('posts', '>', 1)->withCount('posts')->get();
+        $averagePosts = intval(round($posts->avg('posts_count')));
 
-        $averagePosts = DB::select('select AVG(u.posts_count) as avg_posts_count from (select users.*, (select Count(*) from posts where users.id = posts.owner_id) as posts_count from users) as u')[0];
-
-        $averagePosts = intval(round($averagePosts->avg_posts_count));
+//        $averagePosts = DB::select('select AVG(u.posts_count) as avg_posts_count from (select users.*, (select Count(*) from posts where users.id = posts.owner_id) as posts_count from users) as u')[0];
+//        $averagePosts = intval(round($averagePosts->avg_posts_count));
 
         return $averagePosts;
     }
 
     /**
-     * @return Collection
+     * @return Post
      */
+
     public function getMostChangingPost()
     {
-//        $posts = Post::has('history', '>=', 1)->withCount('history')->get();
-//        $maxChangingPosts = $posts->where('history_count', $posts->max('history_count'));
+        $maxChangingPost = Post::has('history', '>=', 1)->withCount('history')->orderBy('history_count', 'desc')->first();
 
-        $maxHistoryCount = DB::table('posts')
-            ->join('histories as h', 'posts.id', '=', 'h.post_id')
-            ->select('posts.name', DB::raw('Count(*) as history_count'))
-            ->groupBy('posts.name')
-            ->orderByDesc('history_count')
-            ->first()
-        ;
-
-        $maxChangingPost = Post::where('name', $maxHistoryCount->name)->withCount('history')->get();
+//        $maxHistoryCount = DB::table('posts')
+//            ->join('histories as h', 'posts.id', '=', 'h.post_id')
+//            ->select('posts.name', DB::raw('Count(*) as history_count'))
+//            ->groupBy('posts.name')
+//            ->orderByDesc('history_count')
+//            ->first()
+//        ;
 
         return $maxChangingPost;
     }
@@ -122,21 +116,18 @@ class StatisticService
 
     public function getMostCommentPost()
     {
-//        $posts = Post::has('comments', '>=', 1)->withCount('comments')->get();
-//        $mostCommentPosts = $posts->where('comments_count', $posts->max('comments_count'));
+        $mostCommentPost = Post::has('comments', '>=', 1)->withCount('comments')->orderBy('comments_count', 'desc')->first();
 
-        $maxComment = DB::table('posts')
-            ->join('comments as c', function ($join) {
-                $join->on('posts.id', '=', 'c.commentable_id')
-                    ->where('c.commentable_type', '=', 'App\Post');
-            })
-            ->select('posts.name', DB::raw('Count(*) as comments_count'))
-            ->groupBy('posts.name')
-            ->orderByDesc('comments_count')
-            ->first()
-        ;
-
-        $mostCommentPost = Post::where('name', $maxComment->name)->withCount('comments')->get();
+//        $maxComment = DB::table('posts')
+//            ->join('comments as c', function ($join) {
+//                $join->on('posts.id', '=', 'c.commentable_id')
+//                    ->where('c.commentable_type', '=', 'App\Post');
+//            })
+//            ->select('posts.name', DB::raw('Count(*) as comments_count'))
+//            ->groupBy('posts.name')
+//            ->orderByDesc('comments_count')
+//            ->first()
+//        ;
 
         return $mostCommentPost;
     }

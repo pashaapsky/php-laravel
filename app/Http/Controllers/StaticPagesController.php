@@ -6,6 +6,13 @@ use App\Services\StatisticService;
 
 class StaticPagesController extends Controller
 {
+    protected $statisticService;
+
+    public function __construct(StatisticService $statisticService)
+    {
+        $this->statisticService = $statisticService;
+    }
+
     public function contactsIndex() {
         return view('static.contacts');
     }
@@ -16,43 +23,39 @@ class StaticPagesController extends Controller
 
     public function statisticsIndex() {
         //Общее количество статей
-        $statisticService = new StatisticService();
-
-        $postsCount = $statisticService->getPostsCount();
+        $postsCount = $this->statisticService->getPostsCount();
 
         //Общее количество новостей
-        $newsCount = $statisticService->getNewsCount();
+        $newsCount = $this->statisticService->getNewsCount();
 
         //ФИО автора, у которого больше всего статей на сайте
-        $usersWithMostPosts = $statisticService->getUserWithMaxPosts();
+        $userWithMostPosts = $this->statisticService->getUserWithMaxPosts();
 
         //Самая длинная статья - название, ссылка на статью и длина статьи в символах
-        $theLongestPost = $statisticService->getTheLongestPost();
+        $theLongestPost = $this->statisticService->getTheLongestPost();
 
         //Самая короткая статья - название, ссылка на статью и длина статьи в символах
-        $theShortestPost = $statisticService->getTheShortestPost();
+        $theShortestPost = $this->statisticService->getTheShortestPost();
 
         //Средние количество статей у “активных” пользователей, при этом активным пользователь считается, если у него есть более 1-й статьи
-        $avgPostsHaveActiveUsers = $statisticService->getAveragePosts();
+        $avgPostsHaveActiveUsers = $this->statisticService->getAveragePosts();
 
         //Самая непостоянная - название, ссылка на статью, которую меняли больше всего раз
-        $mostChangingPosts = $statisticService->getMostChangingPost();
+        $mostChangingPost = $this->statisticService->getMostChangingPost();
 
         //Самая обсуждаемая статья  - название, ссылка на статью, у которой больше всего комментариев.
-        $mostCommentPosts = $statisticService->getMostCommentPost();
+        $mostCommentPost = $this->statisticService->getMostCommentPost();
 
         $statistics = [
             'posts_count' => $postsCount,
             'news_count' => $newsCount,
-            'users_with_most_posts' => $usersWithMostPosts,
-            'the_longest_posts' => $theLongestPost,
-            'the_shortest_posts' => $theShortestPost,
+            'user_with_most_posts' => $userWithMostPosts,
+            'the_longest_post' => $theLongestPost,
+            'the_shortest_post' => $theShortestPost,
             'avg_posts_have_active_users' => $avgPostsHaveActiveUsers,
-            'most_changing_posts' => $mostChangingPosts,
-            'most_comment_posts' => $mostCommentPosts
+            'most_changing_post' => $mostChangingPost,
+            'most_comment_post' => $mostCommentPost
         ];
-
-//        dd($theShortestPost);
 
         return view('static.statistics', ['statistics' => $statistics]);
     }

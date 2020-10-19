@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\StatisticService;
 use App\Tag;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with('tagsCloud', $tags);
         });
+
+        $this->app->make(StatisticService::class);
     }
 
     /**

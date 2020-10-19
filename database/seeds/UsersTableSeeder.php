@@ -9,7 +9,6 @@ use App\Role;
 use App\Tag;
 use App\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
@@ -32,8 +31,7 @@ class UsersTableSeeder extends Seeder
         });
 
         User::factory()
-            ->has(Post::factory()->hasComments(random_int(0, 3))
-                ->count(9))
+            ->has(Post::factory()->hasHistory(random_int(0,3))->hasComments(random_int(0,3))->count(9))
             ->count(3)
             ->create()
             ->each(function (User $user) use ($registeredRole, $registeredPermissions, $tags) {
