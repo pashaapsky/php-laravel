@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\News;
 use App\Permission;
 use App\Post;
 use App\Role;
 use App\Tag;
 use App\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
@@ -31,9 +31,8 @@ class UsersTableSeeder extends Seeder
         });
 
         User::factory()
-            ->has(Post::factory()
-                ->count(9))
-            ->count(2)
+            ->has(Post::factory()->hasHistory(random_int(0,3))->hasComments(random_int(0,3))->count(9))
+            ->count(3)
             ->create()
             ->each(function (User $user) use ($registeredRole, $registeredPermissions, $tags) {
                 $user->roles()->attach($registeredRole);
@@ -43,5 +42,11 @@ class UsersTableSeeder extends Seeder
                 });
             })
         ;
+
+        $news = News::all();
+
+        foreach ($news as $new) {
+            $new->tags()->attach($tags->random(random_int(0,1)));
+        }
     }
 }

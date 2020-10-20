@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Events\PostCreated;
+use App\Events\PostUpdated;
+use App\Listeners\AddHistoryOnUpdatePost;
 use App\Listeners\SendPostCreateNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -20,8 +22,8 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        PostCreated::class => [
-            SendPostCreateNotification::class,
+        PostUpdated::class => [
+           AddHistoryOnUpdatePost::class,
         ],
     ];
 

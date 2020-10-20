@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\StatisticService;
 use App\Tag;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,8 +16,12 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         view()->composer('layouts.aside-tags', function ($view) {
-            $view->with('tagsCloud', Tag::all());
+            $tags = Tag::whereHas('posts')->orWhereHas('news')->get();
+
+            $view->with('tagsCloud', $tags);
         });
+
+        $this->app->make(StatisticService::class);
     }
 
     /**
@@ -26,6 +31,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+
     }
 }

@@ -73,7 +73,7 @@
                   required="">{{ old('text', $post->text) }}</textarea>
 
         <div class="invalid-feedback">
-            Post Description is required.
+            Post Text is required.
         </div>
 
         @error('text')

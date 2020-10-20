@@ -17,7 +17,15 @@
                     </li>
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('user.posts') }}">{{ __('My posts') }}</a>
+                        <a class="nav-link" href="{{ route('news.index') }}">{{ __('News') }}</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('posts.index') }}">{{ __('My posts') }}</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('statistics') }}">{{ __('Some Analyzing') }}</a>
                     </li>
 
                     <li class="nav-item">
