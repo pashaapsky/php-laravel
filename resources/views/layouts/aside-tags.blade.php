@@ -2,7 +2,7 @@
     @if($tagsCloud->isNotEmpty())
         <h3 class="tags-cloud__header text-center">Available Tags</h3>
 
-        @include('layouts.posts.tags', ['tags' => $tagsCloud])
+        @include('layouts.tags.tags', ['tags' => $tagsCloud])
     @else
         <h3 class="tags-cloud__header text-center">No available tags</h3>
     @endif

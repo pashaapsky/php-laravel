@@ -1,5 +1,7 @@
 <?php
 
+use App\User;
+
 if (! function_exists('flash')) {
     /**
      * @param $message
@@ -19,7 +21,7 @@ if (! function_exists('sendMailNotifyToAdmin')) {
      */
 
     function sendMailNotifyToAdmin($mailView) {
-        $admin = \App\User::where('email', env('ADMIN_EMAIL_FOR_NOTIFICATIONS'))->first();
+        $admin = User::where('email', env('ADMIN_EMAIL_FOR_NOTIFICATIONS'))->first();
 
         if ($admin) {
             $admin->notify($mailView);
@@ -43,3 +45,6 @@ if (! function_exists('pushNotification')) {
         return app(\App\Services\PushNotificationsService::class)->send($text, $title);
     }
 }
+
+
+
