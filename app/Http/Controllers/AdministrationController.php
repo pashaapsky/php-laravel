@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\News;
 use App\Post;
+use Illuminate\Http\Request;
 
 class AdministrationController extends Controller
 {
@@ -24,5 +25,16 @@ class AdministrationController extends Controller
     public function news() {
         $news = News::latest()->get();
         return view('/admin.news', compact('news'));
+    }
+
+    public function orders() {
+        return view('/admin.orders');
+    }
+
+    public function ordersStore(Request $request) {
+
+        \App\Jobs\GenerateResultingOrder::dispatch($request->all());
+
+        return back();
     }
 }

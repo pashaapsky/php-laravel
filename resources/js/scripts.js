@@ -9,7 +9,7 @@ $(document).ready(function () {
         }
 
         this.classList.add('was-validated');
-    })
+    });
 
     feedbackCreateForm.on('submit', function (event) {
         if (this.checkValidity() === false) {
@@ -17,5 +17,5 @@ $(document).ready(function () {
         }
 
         this.classList.add('was-validated');
-    })
-})
+    });
+});

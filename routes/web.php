@@ -30,6 +30,8 @@ Route::get('/admin/posts', [App\Http\Controllers\AdministrationController::class
 Route::get('/admin/news', [App\Http\Controllers\AdministrationController::class,'news'])->name('admin.news');
 Route::get('/admin/news/create', [App\Http\Controllers\NewsController::class,'create'])->name('news.create');
 Route::get('/admin/news/{new}/edit', [App\Http\Controllers\NewsController::class,'edit'])->name('news.edit');
+Route::get('/admin/orders', [App\Http\Controllers\AdministrationController::class,'orders'])->name('admin.orders');
+Route::post('/admin/orders', [App\Http\Controllers\AdministrationController::class,'ordersStore'])->name('admin.orders.store');
 
 Route::get('/admin/feedbacks', [App\Http\Controllers\FeedbacksController::class,'index'])->name('feedback');;
 Route::post('/admin/feedbacks', [App\Http\Controllers\FeedbacksController::class,'store']);
