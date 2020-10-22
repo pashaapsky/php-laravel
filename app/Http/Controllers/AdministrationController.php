@@ -33,7 +33,7 @@ class AdministrationController extends Controller
 
     public function ordersStore(Request $request) {
 
-        \App\Jobs\GenerateResultingOrder::dispatch($request->all());
+        \App\Jobs\GenerateResultingOrder::dispatch($request->all(), auth()->user());
 
         return back();
     }

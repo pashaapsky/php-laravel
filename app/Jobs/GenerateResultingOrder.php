@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Comment;
+use App\Mail\ResultingOrderSend;
 use App\News;
 use App\Post;
 use App\Tag;
@@ -19,10 +20,12 @@ class GenerateResultingOrder implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $requestData;
+    protected $user;
 
-    public function __construct($requestData)
+    public function __construct($requestData, $user)
     {
         $this->requestData = $requestData;
+        $this->user = $user;
     }
 
     public function handle()
@@ -51,8 +54,8 @@ class GenerateResultingOrder implements ShouldQueue
             }
         }
 
-        Mail::to(auth()->user()->email)->send(
-            new \App\Mail\ResultingOrderSend($data)
+        Mail::to($this->user->email)->send(
+            new ResultingOrderSend($data)
         );
     }
 
