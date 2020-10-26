@@ -27,6 +27,10 @@
 
         @yield('content')
 
+        <div id="admin-channel">
+
+        </div>
+
         <footer class="footer mt-auto">
             @yield('footer')
         </footer>
