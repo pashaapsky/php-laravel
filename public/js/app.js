@@ -76048,7 +76048,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
  */
 
 
-__webpack_require__(/*! ./components/Example */ "./resources/js/components/Example.js");
+__webpack_require__(/*! ./components/AdminChat */ "./resources/js/components/AdminChat.js");
 
 /***/ }),
 
@@ -76097,31 +76097,12 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   host: window.location.hostname + ':6001'
 });
 
-__webpack_require__(/*! ./broadcasting */ "./resources/js/broadcasting.js");
-
 /***/ }),
 
-/***/ "./resources/js/broadcasting.js":
-/*!**************************************!*\
-  !*** ./resources/js/broadcasting.js ***!
-  \**************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-Echo.channel('test-channel').listen('ChannelEvent', function (event) {
-  console.log(event);
-  alert(event.data);
-});
-Echo["private"]('admin').listen('event', function (event) {
-  console.log(event);
-});
-
-/***/ }),
-
-/***/ "./resources/js/components/Example.js":
-/*!********************************************!*\
-  !*** ./resources/js/components/Example.js ***!
-  \********************************************/
+/***/ "./resources/js/components/AdminChat.js":
+/*!**********************************************!*\
+  !*** ./resources/js/components/AdminChat.js ***!
+  \**********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -76156,57 +76137,62 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-var Update = /*#__PURE__*/function (_React$Component) {
-  _inherits(Update, _React$Component);
+var AdminChat = /*#__PURE__*/function (_React$Component) {
+  _inherits(AdminChat, _React$Component);
 
-  var _super = _createSuper(Update);
+  var _super = _createSuper(AdminChat);
 
-  function Update(props) {
+  function AdminChat(props) {
     var _this;
 
-    _classCallCheck(this, Update);
+    _classCallCheck(this, AdminChat);
 
     _this = _super.call(this, props);
     _this.state = {
-      hasUpdate: false
+      postUpdateMessage: ''
     };
     return _this;
   }
 
-  _createClass(Update, [{
-    key: "render",
-    value: function render() {}
+  _createClass(AdminChat, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      Echo["private"]('admin-chat-channel').listen('PostUpdated', function (data) {
+        console.log(data);
+      });
+    }
   }, {
-    key: "if",
-    value: function _if() {
-      var _this2 = this;
-
+    key: "render",
+    value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row justify-content-center"
+        className: "admin-chat"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-md-8"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "card"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "card-header"
-      }, "Example Component Show"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn btn-primary",
-        onClick: function onClick() {
-          _this2.reload();
-        }
-      }, "\u041E\u0431\u043D\u043E\u0432\u0438\u0442\u044C")))));
+        className: "admin-chat__body collapse p-1 mb-1",
+        id: "adminChatCollapse"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+        className: "admin-chat_header text-center"
+      }, "\u0421\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u044F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "admin-chat__message-block"
+      }, this.state.postUpdateMessage)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "admin-chat-btn btn btn-primary",
+        "data-toggle": "collapse",
+        href: "#adminChatCollapse",
+        role: "button",
+        "aria-expanded": "false",
+        "aria-controls": "adminChatCollapse"
+      }, "\u041A\u0430\u043D\u0430\u043B \u0430\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\u043E\u0440\u043E\u0432")));
     }
   }]);
 
-  return Update;
+  return AdminChat;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (Example);
+/* harmony default export */ __webpack_exports__["default"] = (AdminChat);
 
 if (document.getElementById('admin-channel')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Update, null), document.getElementById('admin-channel'));
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AdminChat, null), document.getElementById('admin-channel'));
 }
 
 /***/ }),

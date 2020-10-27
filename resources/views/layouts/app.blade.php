@@ -27,7 +27,7 @@
 
         @yield('content')
 
-        <div id="admin-channel">
+        <div class="admin-channel position-fixed border border-primary" id="admin-channel">
 
         </div>
 

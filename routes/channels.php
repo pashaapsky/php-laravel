@@ -1,6 +1,6 @@
 <?php
 
-use App\Broadcasting\AdminChannel;
+use App\Broadcasting\AdminChatChannel;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -18,4 +18,4 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('admin', AdminChannel::class);
+Broadcast::channel('admin-chat-channel', AdminChatChannel::class);

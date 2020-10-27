@@ -10904,3 +10904,21 @@ a.text-dark:focus {
   }
 }
 
+.admin-chat {
+  color: white;
+}
+
+.admin-channel {
+  bottom: 0;
+  right: 5%;
+  background-color: #4aa0e6;
+  border-radius: 10%;
+}
+
+.admin-chat__body {
+  height: 300px;
+  max-width: 190px;
+  border: 1px solid #4b77ad;
+  overflow: auto;
+}
+

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/test', function () {
-    event(new \App\Events\ChannelEvent(auth()->user(), 'Я молодец'));
+
 });
 
 Route::get('/', function () {

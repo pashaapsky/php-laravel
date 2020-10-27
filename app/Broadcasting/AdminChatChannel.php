@@ -4,7 +4,7 @@ namespace App\Broadcasting;
 
 use App\User;
 
-class AdminChannel
+class AdminChatChannel
 {
     /**
      * Create a new channel instance.
