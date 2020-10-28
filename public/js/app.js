@@ -76149,16 +76149,31 @@ var AdminChat = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      postUpdateMessage: ''
+      message: ''
     };
     return _this;
   }
 
   _createClass(AdminChat, [{
+    key: "addMessage",
+    value: function addMessage(data) {
+      this.setState({
+        message: this.state.message + data
+      });
+      var chat = document.querySelector('.admin-chat__message-block');
+      chat.innerHTML = this.state.message;
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      Echo["private"]('admin-chat-channel').listen('PostUpdated', function (data) {
-        console.log(data);
+      var _this2 = this;
+
+      Echo["private"]('admin-chat-channel').listen('PostUpdatedAdminChat', function (event) {
+        var time = new Date(event.post.updated_at).toTimeString();
+        time = time.slice(0, time.indexOf(' '));
+        var result = "<div class=\"message\">\n                                <time>".concat(time, "</time>\n                                <p>\u0411\u044B\u043B\u0430 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0430 \n                                    <a class=\"message-link\" href=\"/posts/").concat(event.post.id, "\">\u0441\u0442\u0430\u0442\u044C\u044F #").concat(event.post.id, "</a>\n                                </p>\n                                \n                                <p>").concat(event.data, "</p>\n                              </div>");
+
+        _this2.addMessage(result);
       });
     }
   }, {
@@ -76175,7 +76190,7 @@ var AdminChat = /*#__PURE__*/function (_React$Component) {
         className: "admin-chat_header text-center"
       }, "\u0421\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u044F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "admin-chat__message-block"
-      }, this.state.postUpdateMessage)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "admin-chat-btn btn btn-primary",
         "data-toggle": "collapse",
         href: "#adminChatCollapse",

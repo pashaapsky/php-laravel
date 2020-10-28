@@ -10922,3 +10922,9 @@ a.text-dark:focus {
   overflow: auto;
 }
 
+.message-link {
+  color: white;
+  font-weight: bold;
+  text-decoration: underline;
+}
+

@@ -5,14 +5,35 @@ class AdminChat extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            postUpdateMessage : '',
+            message : '',
         };
+    }
+
+    addMessage(data) {
+        this.setState({
+            message : this.state.message + data
+        });
+        const chat = document.querySelector('.admin-chat__message-block');
+        chat.innerHTML = this.state.message;
     }
 
     componentDidMount() {
         Echo.private('admin-chat-channel')
-            .listen('PostUpdated', (data) => {
-                console.log(data);
+            .listen('PostUpdatedAdminChat', (event) => {
+
+                let time = new Date(event.post.updated_at).toTimeString();
+                time = time.slice(0, time.indexOf(' '));
+
+                let result = `<div class="message">
+                                <time>${time}</time>
+                                <p>Была изменена 
+                                    <a class="message-link" href="/posts/${event.post.id}">статья #${event.post.id}</a>
+                                </p>
+                                
+                                <p>${event.data}</p>
+                              </div>`;
+
+                this.addMessage(result);
             });
     }
 
@@ -25,7 +46,7 @@ class AdminChat extends React.Component {
                         <h5 className="admin-chat_header text-center">Сообщения</h5>
 
                         <div className="admin-chat__message-block">
-                            {this.state.postUpdateMessage}
+
                         </div>
                     </div>
 
