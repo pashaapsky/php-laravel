@@ -29,6 +29,10 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.orders') }}">{{ __('Orders') }}</a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('news.create') }}">{{ __('Create New') }}</a>
                 </li>
 

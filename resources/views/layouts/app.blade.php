@@ -27,6 +27,12 @@
 
         @yield('content')
 
+        @if (auth()->user() && auth()->user()->hasRole('admin'))
+        <div class="admin-channel position-fixed border border-primary" id="admin-channel">
+
+        </div>
+        @endif
+
         <footer class="footer mt-auto">
             @yield('footer')
         </footer>
