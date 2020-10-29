@@ -1,34 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
 
-.notify-msg {
-  -webkit-animation: my-animation 10s;
-          animation: my-animation 10s;
-  -webkit-animation-fill-mode: both;
-          animation-fill-mode: both;
-}
-
-@-webkit-keyframes my-animation {
-  0% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-    z-index: -2;
-  }
-}
-
-@keyframes my-animation {
-  0% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-    z-index: -2;
-  }
-}
-
 /*!
  * Bootstrap v4.5.2 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
@@ -10931,5 +10902,29 @@ a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6;
   }
+}
+
+.admin-chat {
+  color: white;
+}
+
+.admin-channel {
+  bottom: 0;
+  right: 5%;
+  background-color: #4aa0e6;
+  border-radius: 10%;
+}
+
+.admin-chat__body {
+  height: 300px;
+  max-width: 190px;
+  border: 1px solid #4b77ad;
+  overflow: auto;
+}
+
+.message-link {
+  color: white;
+  font-weight: bold;
+  text-decoration: underline;
 }
 

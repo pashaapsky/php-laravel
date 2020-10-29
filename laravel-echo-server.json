@@ -1,0 +1,36 @@
+{
+	"authHost": "http://apsky-laravel",
+	"authEndpoint": "/broadcasting/auth",
+	"clients": [
+		{
+			"appId": "74867249d0911442",
+			"key": "d44759549afc66320ef08e0a4e2a119d"
+		}
+	],
+	"database": "redis",
+	"databaseConfig": {
+		"redis": {
+            "keyPrefix": "apsky_laravel_database_"
+        }
+	},
+	"devMode": true,
+	"host": null,
+	"port": "6001",
+	"protocol": "http",
+	"socketio": {},
+	"secureOptions": 67108864,
+	"sslCertPath": "",
+	"sslKeyPath": "",
+	"sslCertChainPath": "",
+	"sslPassphrase": "",
+	"subscribers": {
+		"http": true,
+		"redis": true
+	},
+	"apiOriginAllow": {
+		"allowCors": false,
+		"allowOrigin": "",
+		"allowMethods": "",
+		"allowHeaders": ""
+	}
+}

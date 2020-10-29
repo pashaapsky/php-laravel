@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\PostUpdated;
+use App\Events\PostUpdatedAdminChat;
 
 class AddHistoryOnUpdatePost
 {
@@ -33,5 +34,7 @@ class AddHistoryOnUpdatePost
         ];
 
         $event->post->history()->create($values);
+
+        event(new PostUpdatedAdminChat($event->post, $result));
     }
 }
