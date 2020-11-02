@@ -6,10 +6,10 @@ use App\Notifications\PostCreated;
 use App\Notifications\PostDeleted;
 use App\Notifications\PostEdited;
 use App\Post;
-use App\PostTag;
 use App\Services\TagsCreatorService;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\Rule;
 
 class PostsController extends Controller
@@ -31,7 +31,10 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = auth()->user()->posts()->with(['tags', 'comments'])->latest()->get();
+        $posts = Cache::tags('posts')->remember('user_posts|' . auth()->id(), 3600, function () {
+           return auth()->user()->posts()->with(['tags', 'comments'])->latest()->get();
+        });
+
         return view('/posts.index', compact('posts'));
     }
 

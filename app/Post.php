@@ -2,7 +2,9 @@
 
 namespace App;
 
+use App\Events\PostDeleted;
 use App\Events\PostUpdated;
+use App\Mail\PostCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,7 +17,9 @@ class Post extends Model
     protected $guarded = [];
 
     protected $dispatchesEvents = [
+        'created' => PostCreated::class,
         'updated' => PostUpdated::class,
+        'deleted' => PostDeleted::class
     ];
 
     public function tags()

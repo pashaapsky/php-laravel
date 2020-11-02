@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\News;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class AdministrationController extends Controller
 {
@@ -18,12 +19,18 @@ class AdministrationController extends Controller
     }
 
     public function posts() {
-        $posts = Post::with('tags')->latest()->get();
+        $posts = Cache::tags('posts')->remember('user_posts|' . auth()->id(), 3600, function () {
+            return auth()->user()->posts()->with(['tags', 'comments'])->latest()->get();
+        });
+
         return view('/admin.posts', compact('posts'));
     }
 
     public function news() {
-        $news = News::latest()->get();
+        $news = Cache::tags('news')->remember('users_news|' . auth()->id(), 3600, function () {
+            return News::with(['tags', 'comments'])->latest()->get();
+        });
+
         return view('/admin.news', compact('news'));
     }
 

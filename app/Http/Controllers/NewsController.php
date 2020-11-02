@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\News;
-use App\NewTag;
 use App\Services\TagsCreatorService;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\Rule;
 
 class NewsController extends Controller
@@ -27,7 +27,11 @@ class NewsController extends Controller
 
     public function index()
     {
-        $news = News::with(['tags', 'comments'])->latest()->get();
+        $news = Cache::tags('news')->remember('users_news|' . auth()->id(), 3600, function () {
+           return News::with(['tags', 'comments'])->latest()->get();
+        });
+
+//        $news = News::with(['tags', 'comments'])->latest()->get();
 
         return view('news.index', compact('news'));
     }
@@ -74,8 +78,6 @@ class NewsController extends Controller
 
         $updater = new TagsCreatorService($new, $request);
         $updater->updateTags();
-
-//        updateTags($new, $request);
 
         flash( 'New updated successfully');
 
