@@ -2,23 +2,17 @@
 
 namespace App;
 
-use App\Events\NewsCreated;
-use App\Events\NewsDeleted;
-use App\Events\NewsUpdated;
+use App\Traits\CacheModelActions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class News extends Model
 {
     use HasFactory;
+    use CacheModelActions;
 
     protected $guarded = [];
-
-    protected $dispatchesEvents = [
-        'created' => NewsCreated::class,
-        'updated' => NewsUpdated::class,
-        'deleted' => NewsDeleted::class
-    ];
+    public static $cacheTags = ['news', 'latest_news', 'statistics_data', 'tags_cloud'];
 
     public function tags()
     {

@@ -33,8 +33,10 @@ class AddHistoryOnUpdatePost
           'text' => $result
         ];
 
-        $event->post->history()->create($values);
+        if (!empty($result)) {
+            $event->post->history()->create($values);
 
-        event(new PostUpdatedAdminChat($event->post, $result));
+            event(new PostUpdatedAdminChat($event->post, $result));
+        }
     }
 }
