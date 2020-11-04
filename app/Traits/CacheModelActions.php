@@ -15,7 +15,6 @@ trait CacheModelActions
 
         static::updated(function($item)
         {
-            dd($item);
             Cache::tags(static::$cacheTags)->flush();
         });
 

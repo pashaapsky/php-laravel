@@ -27,7 +27,7 @@ class AdministrationController extends Controller
     }
 
     public function news() {
-        $news = Cache::tags('news')->remember('news', 3600, function () {
+        $news = Cache::tags(['news', 'index_news'])->remember('news', 3600, function () {
             return News::with(['tags', 'comments'])->latest()->get();
         });
 

@@ -23,7 +23,7 @@ class StaticPagesController extends Controller
     }
 
     public function statisticsIndex() {
-        $statistics = Cache::tags('statistics_data')->remember('statistics_data', 3600, function () {
+        $statistics = Cache::tags(['news', 'posts', 'tags_cloud', 'statistics', 'statistics_data'])->remember('statistics_data', 3600, function () {
             //Общее количество статей
             $postsCount = $this->statisticService->getPostsCount();
 

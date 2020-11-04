@@ -31,7 +31,7 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = Cache::tags('posts')->remember('user_posts|' . auth()->id(), 3600, function () {
+        $posts = Cache::tags(['posts', 'user_posts'])->remember('user_posts|' . auth()->id(), 3600, function () {
            return auth()->user()->posts()->with(['tags', 'comments'])->latest()->get();
         });
 

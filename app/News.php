@@ -12,7 +12,7 @@ class News extends Model
     use CacheModelActions;
 
     protected $guarded = [];
-    public static $cacheTags = ['news', 'latest_news', 'statistics_data', 'tags_cloud'];
+    public static $cacheTags = ['news'];
 
     public function tags()
     {

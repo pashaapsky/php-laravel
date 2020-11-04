@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         view()->composer('layouts.aside-tags', function ($view) {
-            $tags = Cache::tags('tags_cloud')->remember('tags_cloud', 3600, function () {
+            $tags = Cache::tags(['posts', 'news', 'tags_cloud'])->remember('tags_cloud', 3600, function () {
                 return Tag::whereHas('posts')->orWhereHas('news')->get();
             });
 
