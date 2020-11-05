@@ -13,7 +13,7 @@ trait CacheModelActions
             Cache::tags(static::$cacheTags)->flush();
         });
 
-        static::updated(function($item)
+        static::updated(function()
         {
             Cache::tags(static::$cacheTags)->flush();
         });

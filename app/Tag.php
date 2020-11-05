@@ -12,7 +12,7 @@ class Tag extends Model
     use CacheModelActions;
 
     protected $table = 'tags';
-    public static $cacheTags = ['posts', 'news', 'tags_cloud'];
+    public static $cacheTags = 'tags';
 
     protected $guarded = [];
 

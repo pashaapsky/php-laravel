@@ -16,7 +16,7 @@ class Post extends Model
     protected $table = 'posts';
     protected $guarded = [];
 
-    public static $cacheTags = ['posts'];
+    public static $cacheTags = 'posts';
 
     protected $dispatchesEvents = [
         'created' => PostCreated::class,

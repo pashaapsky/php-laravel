@@ -19,15 +19,15 @@ class AdministrationController extends Controller
     }
 
     public function posts() {
-        $posts = Cache::tags('posts')->remember('user_posts|' . auth()->id(), 3600, function () {
-            return auth()->user()->posts()->with(['tags', 'comments'])->latest()->get();
+        $posts = Cache::tags('posts')->remember('posts', 3600, function () {
+            return Post::with(['tags', 'comments'])->latest()->get();
         });
 
         return view('/admin.posts', compact('posts'));
     }
 
     public function news() {
-        $news = Cache::tags(['news', 'index_news'])->remember('news', 3600, function () {
+        $news = Cache::tags('news')->remember('news', 3600, function () {
             return News::with(['tags', 'comments'])->latest()->get();
         });
 

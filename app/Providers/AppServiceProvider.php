@@ -2,10 +2,6 @@
 
 namespace App\Providers;
 
-use App\News;
-use App\Observers\NewsObserver;
-use App\Observers\PostsObserver;
-use App\Post;
 use App\Services\StatisticService;
 use App\Tag;
 use Illuminate\Support\Facades\Cache;
@@ -22,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         view()->composer('layouts.aside-tags', function ($view) {
-            $tags = Cache::tags(['posts', 'news', 'tags_cloud'])->remember('tags_cloud', 3600, function () {
+            $tags = Cache::tags(['posts', 'news', 'tags'])->remember('tags', 3600, function () {
                 return Tag::whereHas('posts')->orWhereHas('news')->get();
             });
 
