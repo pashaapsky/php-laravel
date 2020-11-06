@@ -19,7 +19,7 @@ class AdministrationController extends Controller
     }
 
     public function posts() {
-        $posts = Cache::tags('posts')->remember('posts', 3600, function () {
+        $posts = Cache::tags(['posts', 'tags', 'statistics'])->remember('posts', 3600, function () {
             return Post::with(['tags', 'comments'])->latest()->get();
         });
 
@@ -27,7 +27,7 @@ class AdministrationController extends Controller
     }
 
     public function news() {
-        $news = Cache::tags('news')->remember('news', 3600, function () {
+        $news = Cache::tags(['news', 'tags', 'statistics'])->remember('news', 3600, function () {
             return News::with(['tags', 'comments'])->latest()->get();
         });
 
