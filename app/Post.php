@@ -3,18 +3,23 @@
 namespace App;
 
 use App\Events\PostUpdated;
+use App\Mail\PostCreated;
+use App\Traits\CacheModelActions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
     use HasFactory;
+    use CacheModelActions;
 
     protected $table = 'posts';
-
     protected $guarded = [];
 
+    public static $cacheTags = 'posts';
+
     protected $dispatchesEvents = [
+        'created' => PostCreated::class,
         'updated' => PostUpdated::class,
     ];
 

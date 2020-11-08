@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Feedback;
+use Illuminate\Filesystem\Cache;
 use Illuminate\Http\Request;
 
 class FeedbacksController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('role:admin');
+        $this->middleware('role:admin')->except('store');
     }
 
     public function index()
@@ -28,6 +29,12 @@ class FeedbacksController extends Controller
 
         Feedback::create($request->all());
 
-        return redirect('/admin/feedbacks');
+        flash('Feedback successfully send (:', 'success');
+
+        if (auth()->user() && auth()->user()->hasRole('admin')) {
+            return redirect('/admin/feedbacks');
+        } else {
+            return back();
+        }
     }
 }
