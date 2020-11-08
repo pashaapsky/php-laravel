@@ -27,7 +27,7 @@ class NewsController extends Controller
 
     public function index()
     {
-        $news = Cache::tags(['news', 'tags', 'statistics'])->remember('news', 3600, function () {
+        $news = Cache::tags(['news', 'tags', 'comments'])->remember('news', 3600, function () {
            return News::with(['tags', 'comments'])->latest()->get();
         });
 
@@ -60,10 +60,6 @@ class NewsController extends Controller
 
     public function show(News $new)
     {
-        $new = Cache::tags(['news', 'tags', 'statistics'])->remember('new|' . $new->id, 3600, function () use ($new) {
-            return $new;
-        });
-
         return view('news.show', compact('new'));
     }
 

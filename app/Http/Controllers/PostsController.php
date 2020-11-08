@@ -31,7 +31,7 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = Cache::tags(['posts', 'tags', 'statistics', 'user_posts'])->remember('user_posts|' . auth()->id(), 3600, function () {
+        $posts = Cache::tags(['posts', 'tags', 'comments', 'user_posts'])->remember('user_posts|' . auth()->id(), 3600, function () {
            return auth()->user()->posts()->with(['tags', 'comments'])->latest()->get();
         });
 
@@ -73,10 +73,6 @@ class PostsController extends Controller
     public function show(Post $post)
     {
         $this->authorize('view', $post);
-
-        $post = Cache::tags(['posts', 'tags', 'statistics'])->remember('post|' . $post->id, 3600, function () use ($post) {
-           return $post;
-        });
 
         return view('/posts.show', compact('post'));
     }

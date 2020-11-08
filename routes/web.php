@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    $posts = Cache::tags(['posts', 'tags', 'statistics', 'latest_publish_posts'])->remember('latest_publish_posts', 3600, function () {
+    $posts = Cache::tags(['posts', 'tags', 'comments', 'latest_publish_posts'])->remember('latest_publish_posts', 3600, function () {
         return Post::with('tags')->where('published', 1)->latest()->take(4)->get();
     });
 
-    $news = Cache::tags(['news', 'tags', 'statistics', 'latest_news'])->remember('latest_news', 3600, function () {
+    $news = Cache::tags(['news', 'tags', 'comments', 'latest_news'])->remember('latest_news', 3600, function () {
         return News::with('tags')->latest()->take(3)->get();
     });
 

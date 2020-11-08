@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\News;
+use App\Post;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
@@ -30,9 +33,23 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
+
+        Route::bind('post', function ($value) {
+            $post = Cache::tags(['posts', 'tags', 'comments'])->remember('post|' . $value, 3600 , function () use ($value) {
+                return Post::where('id', $value)->firstOrFail();
+            });
+
+            return $post;
+        });
+
+        Route::bind('new', function ($value) {
+            $new = Cache::tags(['news', 'tags', 'comments'])->remember('new|' . $value, 3600 , function () use ($value) {
+                return News::where('id', $value)->firstOrFail();
+            });
+
+            return $new;
+        });
     }
 
     /**
