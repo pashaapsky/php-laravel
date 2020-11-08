@@ -10928,3 +10928,32 @@ a.text-dark:focus {
   text-decoration: underline;
 }
 
+.notify-msg {
+  -webkit-animation: my-animation 10s;
+          animation: my-animation 10s;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+}
+
+@-webkit-keyframes my-animation {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    z-index: -2;
+  }
+}
+
+@keyframes my-animation {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    z-index: -2;
+  }
+}
+

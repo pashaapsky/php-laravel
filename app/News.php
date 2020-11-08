@@ -2,14 +2,17 @@
 
 namespace App;
 
+use App\Traits\CacheModelActions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class News extends Model
 {
     use HasFactory;
+    use CacheModelActions;
 
     protected $guarded = [];
+    public static $cacheTags = 'news';
 
     public function tags()
     {
